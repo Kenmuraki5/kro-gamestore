@@ -2,13 +2,18 @@
     <div class="mb-10">
         <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
             <Slide v-for="slide in event" :key="slide">
-                <div class="carousel__item">
-                    <div class="top-left">
-                        <img class="min-w-9 w-72" :src="slide.logo">
+                <div class="xl:h-full sm:h-auto h-32 carousel__item">
+                    <div class="top-left w-screen sm:w-full">
+                        <img class="min-w-9 md:w-72 w-32" :src="slide.logo">
+                        <div class="text-left w-72">
+                            <p class="xl:text-xl text-lg my-5">{{ slide.title }}</p>
+                            <p class="text-xs">{{ slide.description }}</p>
+                        </div>
                     </div>
-                    <img :src=slide.src />
+                    <img :src="slide.src" />
                 </div>
             </Slide>
+
 
             <template #addons>
                 <Navigation />
@@ -29,9 +34,10 @@
             </template>
         </Carousel>
     </div>
-    <section class="bg-black">
+    <section id="game" class="bg-black">
         <div class="mt-10">
-            <div class="text-white text-center text-3xl py-10">
+            <div class="text-white text-center text-3xl py-10"
+                style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                 Great games on PS4 and PS5 that are already available or coming soon.
             </div>
             <div class="grid justify-center pb-20">
@@ -48,8 +54,27 @@
                 </div>
             </div>
         </div>
-
     </section>
+    <section id="cmp-container">
+    <div class="bg-cover h-auto"
+        style="background-image: url('https://gmedia.playstation.com/is/image/SIEPDC/this-month-on-playstation-jan-homepage-background-desktop-01-en-03jan24?$4000px$'); height: 60vh; background-position: center;">
+        <div class="flex items-stretch h-full items-end space-x-4 lg:space-x-16 pb-4 lg:pb-10 ml-4 lg:ml-10">
+            <div class="justify-center w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end"
+                style="background-image: url('https://images.unsplash.com/photo-1606318801954-d46d46d3360a?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+                <p class="inline-block text-white font-medium">Game console</p>
+            </div>
+            <div class="w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end"
+                style="background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2023_09/3596444/230228-gaming-accessories-vl-2x1.jpg')">
+                <p class="inline-block text-white font-medium">Game console</p>
+            </div>
+            <div class="w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end"
+                style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/spider-man-dvd-case-playstation-5-OdlkYJA-600.jpg')">
+                <p class="inline-block text-black font-medium">Game console</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 </template>
   
 <script setup>
@@ -57,9 +82,24 @@ import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
 const event = [
-    { src: "https://gmedia.playstation.com/is/image/SIEPDC/tekken8-hero-banner-desktop-01-en-26jan24?$4000px$", logo:"https://gmedia.playstation.com/is/image/SIEPDC/tekken-8-logo-01-en-21sep22?$800px--t$" },
-    { src: "https://gmedia.playstation.com/is/image/SIEPDC/genshin-impact-4-4-hero-desktop-01-en-18jan24?$3200px$", logo:"https://gmedia.playstation.com/is/image/SIEPDC/genshin-impact-white-logo-01-ps4-16nov21$en?$1200px--t$" },
-    { src: "https://gmedia.playstation.com/is/image/SIEPDC/Diablo-iv-Season-3-hero-banner-desktop-01-en-22jan24?$4000px$", logo:"https://gmedia.playstation.com/is/image/SIEPDC/Diablo-iv-Season-3-logo-01-en-22jan24?$1200px--t$" }
+    {
+        title: "กำปั้นพบกับโชคชะตา",
+        description: "มหากาพย์ Mishima ยังคงดำเนินต่อไป สัมผัสกับเรื่องราวใหม่สุดยิ่งใหญ่ที่ประกอบด้วยนักสู้ที่ไม่ธรรมดามากมาย",
+        src: "https://gmedia.playstation.com/is/image/SIEPDC/tekken8-hero-banner-desktop-01-en-26jan24?$4000px$",
+        logo: "https://gmedia.playstation.com/is/image/SIEPDC/tekken-8-logo-01-en-21sep22?$800px--t$",
+    },
+    {
+        title: "เฉลิมฉลองปีใหม่ของ Teyvat",
+        description: "เป็นส่วนหนึ่งของอีเว้นท์ Lantern Rite และสำรวจสถานที่ใหม่ Chenyu Vale ในการอัปเดตใหญ่ครั้งใหม่ของเกม RPG ผจญภัยแบบโลกเปิดที่ได้รับคำชมมากมาย",
+        src: "https://gmedia.playstation.com/is/image/SIEPDC/genshin-impact-4-4-hero-desktop-01-en-18jan24?$3200px$",
+        logo: "https://gmedia.playstation.com/is/image/SIEPDC/genshin-impact-white-logo-01-ps4-16nov21$en?$1200px--t$"
+    },
+    {
+        title: "เผยภัยคุกคามที่กำลังก่อตัว",
+        description: "บริหารทรัพยากร เผชิญหน้ากับเหล่า Construct สุดโหด และฟันฝ่าความท้าทายใหม่ล่าสุดต่างๆของ Sanctuary ใน Season of the Construct",
+        src: "https://gmedia.playstation.com/is/image/SIEPDC/Diablo-iv-Season-3-hero-banner-desktop-01-en-22jan24?$4000px$",
+        logo: "https://gmedia.playstation.com/is/image/SIEPDC/Diablo-iv-Season-3-logo-01-en-22jan24?$1200px--t$"
+    }
 ]
 
 const games = [
@@ -96,19 +136,16 @@ export default {
   
 <style>
 .carousel__item {
-    min-height: 200px;
+    min-height: 300px;
     width: 100%;
     color: white;
+    background-color: black;
     font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
 }
 
 .carousel__item2 {
-    min-height: 100px;
-    width: 300px;
+    min-height: 80px;
+    width: 200px;
     color: white;
     background: white;
 
@@ -117,14 +154,21 @@ export default {
     justify-content: center;
     align-items: center;
 }
+
 .carousel__prev,
 .carousel__next {
     box-sizing: content-box;
 }
+
 .top-left {
-  position: absolute;
-  top: 8px;
-  left: 16px;
+    position: absolute;
+    top: 100px;
+    left: 60px;
+    width:100%;
+}
+
+.title-block {
+    font-family: "Hiragino Kaku Gothic Pro", Meiryo, Osaka, "MS PGothic", Arial, sans-serif;
 }
 </style>
   
