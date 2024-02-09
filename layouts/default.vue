@@ -2,7 +2,7 @@
   
   <!-- wrapper--------------------------------------------------- -->
   <!-- <navBar/> -->
-  <div  class="w-[77%] m-auto">
+  <div  class="w-[77%] m-auto ">
       <slot />
     </div>
   </template>
