@@ -7,7 +7,7 @@
                         <img class="min-w-9 md:w-72 w-32" :src="slide.logo">
                         <div class="text-left w-72">
                             <p class="xl:text-xl text-lg my-5">{{ slide.title }}</p>
-                            <p class="text-xs">{{ slide.description }}</p>
+                            <p class="text-xs xl:text-base">{{ slide.description }}</p>
                         </div>
                     </div>
                     <img :src="slide.src" />
@@ -36,7 +36,7 @@
     </div>
     <section id="game" class="bg-black">
         <div class="mt-10">
-            <div class="text-white text-center text-3xl py-10"
+            <div class="text-white text-center text-3xl py-20"
                 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                 Great games on PS4 and PS5 that are already available or coming soon.
             </div>
