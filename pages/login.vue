@@ -1,9 +1,12 @@
 <template>
   <div class="flex min-h-screen items-center justify-center bg-gray-100">
     <div class="hidden sm:flex sm:w-1/2 bg-cover bg-center bg-sky-100 h-screen items-center justify-center">
-      <img class="h-64 w-auto" src="https://my.account.sony.com/sonyacct/signin/dsb_signin_5571/assets/images/playstationfamilymark_light.svg" alt="Your Company">
+      <img class="h-72 w-auto" src="../assets//logo.png" alt="Your Company">
     </div>
     <div class="w-full sm:w-1/2 mx-4">
+      <div class="flex sm:hidden bg-cove items-center justify-center">
+        <img class="h-64 w-auto" src="../assets//logo.png" alt="Your Company">
+      </div>
       <div class="sm:mx-auto sm:w-full">
         <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account
         </h2>

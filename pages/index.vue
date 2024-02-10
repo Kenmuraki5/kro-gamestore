@@ -61,10 +61,10 @@
         <div class="bg-cover h-auto"
             style="background-image: url('https://gmedia.playstation.com/is/image/SIEPDC/this-month-on-playstation-jan-homepage-background-desktop-01-en-03jan24?$4000px$'); height: 60vh; background-position: center;">
             <div class="flex items-stretch h-full items-end space-x-4 lg:space-x-16 pb-4 lg:pb-10 mx-4 lg:ml-10">
-                <div class="bg-center w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end hover:-translate-y-6 duration-300 ease-in-out"
+                <NuxtLink to="/game-console" class="bg-center w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end hover:-translate-y-6 duration-300 ease-in-out"
                     style="background-image: url('https://images.unsplash.com/photo-1606318801954-d46d46d3360a?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
                     <p class="text-white font-medium  text-center">Console</p>
-                </div>
+                </NuxtLink>
                 <div class="bg-center w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end hover:-translate-y-6 duration-300 ease-in-out"
                     style="background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2023_09/3596444/230228-gaming-accessories-vl-2x1.jpg')">
                     <p class="text-white font-medium text-center">Accessories</p>
@@ -79,9 +79,6 @@
 </template>
   
 <script setup>
-import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
-import 'vue3-carousel/dist/carousel.css'
-
 const event = [
     {
         title: "กำปั้นพบกับโชคชะตา",
