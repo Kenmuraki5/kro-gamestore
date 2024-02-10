@@ -10,69 +10,102 @@
                             aria-controls="mobile-menu" aria-expanded="false">
                             <span class="absolute -inset-0.5"></span>
                             <span class="sr-only">Open main menu</span>
-                            <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
+                            <!--        Icon when menu is closed.       Menu open: "hidden", Menu closed: "block"       -->
                             <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                             </svg>
-                            <!--
-            Icon when menu is open.
-
-            Menu open: "block", Menu closed: "hidden"
-          -->
+                            <!--           Icon when menu is open.            Menu open: "block", Menu closed: "hidden"       -->
                             <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
+
+
                     <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                        <div class="flex flex-shrink-0 items-center">
-                            <img class="h-10 w-auto" src="~assets/logo.png"
-                                alt="Your Company">
-                        </div>
+                        <nuxt-link to="/">
+                            <div class="flex flex-shrink-0 items-center">
+                                <img class="h-10 w-auto" src="~assets/logo.png" alt="Your Company">
+                            </div>
+                        </nuxt-link>
                         <div class="hidden sm:ml-6 sm:block">
                             <div class="flex space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    aria-current="page">Dashboard</a>
-                                <a href="#"
-                                    class="text-black-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
-                                <a href="#"
-                                    class="text-black-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-                                <a href="#"
-                                    class="text-black-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
+                                <nuxt-link to="/game-console"
+                                    class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                    aria-current="page">
+                                    Game Console
+                                </nuxt-link>
+
+
                             </div>
                         </div>
                     </div>
+
+                    <!-- Cart -->
                     <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                        <button type="button"
-                            class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                            <span class="absolute -inset-1.5"></span>
-                            <span class="sr-only">View notifications</span>
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                            </svg>
-                        </button>
+                        <div class="relative ml-3">
+                            <button type="button" @click="cartMenu = cartMenu == false ? true : false"
+                                class="relative rounded-full bg-white focus:bg-gray-800 focus:text-white p-1 text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                <span class="absolute -inset-1.5"></span>
+                                <span class="sr-only">View Cart</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                </svg>
+
+                            </button>
+                            <div v-if="cartMenu"
+                                class="absolute right-0 z-10 mt-2 w-[16rem] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                <!-- list of items -->
+                                <div v-for="item in itemsCart"
+                                    class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 gap-5 pt-5"
+                                    role="menuitem" tabindex="-1" id="user-menu-item-0">
+                                    <img src="~assets/logo.png" alt="Item 1" class="w-8 h-8">
+                                    <span>{{ splitNameLegnth(item.name) }}</span>
+                                    <span>{{ item.cost }} THB</span>
+                                    <button type="button" @click="delItemFromCart" class="text-red-500">X</button>
+                                   
+                                </div>
+                                <div v-if="totalCost > 0" class="flex justify-around items-center mt-5">
+
+                                    <!-- total cost -->
+                                    <span class=" ">Total: {{ totalCost }} THB</span>
+                                    <!-- checkout -->
+                                    <nuxt-link to="/checkout">
+                                        
+                                    <button type="button"
+                                        class="block w-auto px-4 py-2 text-sm text-center text-white bg-gray-900 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                                        role="menuitem" tabindex="-1" id="user-menu-item-2">Checkout</button>
+                                    </nuxt-link>
+
+                                </div>
+                                <div v-else class="flex justify-center items-center mt-5 mb-5">
+                                    <span class="text-gray-500">Cart is empty</span>
+                                </div>
+
+                            </div>
+                        </div>
 
                         <!-- Profile dropdown -->
                         <div class="relative ml-3">
                             <div>
                                 <button type="button" @click="profileMenu = profileMenu == false ? true : false"
-                                    class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                    class="relative rounded-full bg-white focus:bg-gray-800 focus:text-white p-1 text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <span class="absolute -inset-1.5"></span>
                                     <span class="sr-only">Open user menu</span>
-                                    <img class="h-8 w-8 rounded-full"
-                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        alt="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                    </svg>
+
                                 </button>
                             </div>
                             <div v-if="profileMenu"
@@ -90,6 +123,9 @@
                     </div>
                 </div>
             </div>
+
+
+
 
             <!-- Mobile menu, show/hide based on menu state. -->
             <div class="sm:hidden" id="mobile-menu" v-if="mobileMenu">
@@ -112,4 +148,44 @@
 <script setup>
 const profileMenu = ref(false);
 const mobileMenu = ref(false)
+const cartMenu = ref(false)
+
+const totalCost = computed(() => {
+    return itemsCart.value.reduce((acc, item) => acc + item.cost, 0)
+})
+
+const splitNameLegnth = (name) => {
+    if (name.length > 5) {
+        return name.substring(0, 5) + '...'
+    }
+    return name
+}
+
+const delItemFromCart = (index) => {
+    itemsCart.value.splice(index, 1)
+
+}
+
+// fetch itemsCart from API 
+const itemsCart = ref([
+    {
+        id: 1,
+        name: "Playstation 5",
+        cost: 20000
+    },
+    {
+        id: 2,
+        name: "Xbox Series X",
+
+        cost: 25000
+    },
+    {
+        id: 3,
+        name: "Nintendo Switch",
+        cost: 15000
+    },
+
+])
+
+
 </script>
