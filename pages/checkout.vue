@@ -70,9 +70,9 @@
                     <label
                         class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
                         for="radio_1">
-                        <img class="w-14 object-contain" src="" alt="" />
+                        <img class="w-14 object-contain" src="~/assets/dhl-logo.png" alt="" />
                         <div class="ml-5">
-                            <span class="mt-2 font-semibold">Fedex Delivery</span>
+                            <span class="mt-2 font-semibold">DHL Express</span>
                             <p class="text-slate-500 text-sm leading-6">Delivery: 2-4 Days</p>
                         </div>
                     </label>
@@ -84,9 +84,9 @@
                     <label
                         class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
                         for="radio_2">
-                        <img class="w-14 object-contain" src="" alt="" />
+                        <img class="w-14 object-contain" src="~/assets/kerry-logo.jpg" alt="" />
                         <div class="ml-5">
-                            <span class="mt-2 font-semibold">Fedex Delivery</span>
+                            <span class="mt-2 font-semibold">Kerry Express</span>
                             <p class="text-slate-500 text-sm leading-6">Delivery: 2-4 Days</p>
                         </div>
                     </label>
@@ -186,3 +186,4 @@
         </div>
     </div>
 </template>
+

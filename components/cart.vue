@@ -76,6 +76,7 @@
                                         </p>
                                         <div class="mt-6">
                                             <NuxtLink to="/checkout"
+                                                @click="$emit('update:cartMenu', false)"
                                                 class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</NuxtLink>
                                         </div>
                                         <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
@@ -83,7 +84,7 @@
                                                 or{{ ' ' }}
                                                 <button type="button"
                                                     class="font-medium text-indigo-600 hover:text-indigo-500"
-                                                    @click="open = false">
+                                                    @click="$emit('update:cartMenu', false)">
                                                     Continue Shopping
                                                     <span aria-hidden="true"> &rarr;</span>
                                                 </button>
@@ -111,6 +112,4 @@ const props = defineProps({
   itemsCart: Object,
   totalCost: Number
 });
-
-const open = ref(true)
 </script>
