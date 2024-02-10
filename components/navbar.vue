@@ -59,37 +59,8 @@
                                 </svg>
 
                             </button>
-                            <div v-if="cartMenu"
-                                class="absolute right-0 z-10 mt-2 w-[16rem] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                <!-- list of items -->
-                                <div v-for="item in itemsCart"
-                                    class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 gap-5 pt-5"
-                                    role="menuitem" tabindex="-1" id="user-menu-item-0">
-                                    <img src="~assets/logo.png" alt="Item 1" class="w-8 h-8">
-                                    <span>{{ splitNameLegnth(item.name) }}</span>
-                                    <span>{{ item.cost }} THB</span>
-                                    <button type="button" @click="delItemFromCart" class="text-red-500">X</button>
-                                   
-                                </div>
-                                <div v-if="totalCost > 0" class="flex justify-around items-center mt-5">
+                            <cart :cartMenu="cartMenu" @update:cartMenu="updateCartMenu" :itemsCart="itemsCart" :totalCost="totalCost"></cart>
 
-                                    <!-- total cost -->
-                                    <span class=" ">Total: {{ totalCost }} THB</span>
-                                    <!-- checkout -->
-                                    <nuxt-link to="/checkout">
-                                        
-                                    <button type="button"
-                                        class="block w-auto px-4 py-2 text-sm text-center text-white bg-gray-900 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                                        role="menuitem" tabindex="-1" id="user-menu-item-2">Checkout</button>
-                                    </nuxt-link>
-
-                                </div>
-                                <div v-else class="flex justify-center items-center mt-5 mb-5">
-                                    <span class="text-gray-500">Cart is empty</span>
-                                </div>
-
-                            </div>
                         </div>
 
                         <!-- Profile dropdown -->
@@ -147,11 +118,10 @@
 
 <script setup>
 const profileMenu = ref(false);
-const mobileMenu = ref(false)
-const cartMenu = ref(false)
-
+const mobileMenu = ref(false);
+const cartMenu = ref(false);
 const totalCost = computed(() => {
-    return itemsCart.value.reduce((acc, item) => acc + item.cost, 0)
+    return itemsCart.value.reduce((acc, item) => acc + (item.cost * item.quantity), 0)
 })
 
 const splitNameLegnth = (name) => {
@@ -166,23 +136,29 @@ const delItemFromCart = (index) => {
 
 }
 
+const updateCartMenu = (value) => {
+  cartMenu.value = value; // Update the prop in the parent
+};
+
 // fetch itemsCart from API 
 const itemsCart = ref([
     {
         id: 1,
         name: "Playstation 5",
-        cost: 20000
+        cost: 20000,
+        quantity:2
     },
     {
         id: 2,
         name: "Xbox Series X",
-
-        cost: 25000
+        cost: 25000,
+        quantity:2
     },
     {
         id: 3,
         name: "Nintendo Switch",
-        cost: 15000
+        cost: 15000,
+        quantity:2
     },
 
 ])

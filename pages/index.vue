@@ -36,19 +36,21 @@
     </div>
     <section id="game" class="bg-black">
         <div class="mt-10">
-            <div class="text-white text-center text-3xl py-20"
+            <div class="text-white text-center text-xl py-20"
                 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                 Great games on PS4 and PS5 that are already available or coming soon.
             </div>
             <div class="grid justify-center pb-20">
                 <div class="grid grid-cols-4 m-5 gap-4">
                     <div v-for="i in games.length - games.length % 4" class="flex justify-center">
-                        <img class="w-32 xl:w-64 rounded" :src="games[i - 1].src">
+                        <img class="w-32 xl:w-64 rounded hover:-translate-y-6 duration-300 ease-in-out hover:border-2 hover:border-cyan-300"
+                            :src="games[i - 1].src">
                     </div>
                 </div>
                 <div :class="'grid grid-cols-3 place-items-center mx-auto gap-3'">
                     <div v-for="i in (games.length % 4)" class="flex items-center justify-center">
-                        <img class="w-32 xl:w-64 rounded" :src="games[(games.length - i)].src" />
+                        <img class="w-32 xl:w-64 rounded hover:-translate-y-6 duration-300 ease-in-out hover:border-2 hover:border-cyan-300"
+                            :src="games[(games.length - i)].src" />
                     </div>
 
                 </div>
@@ -56,25 +58,24 @@
         </div>
     </section>
     <section id="cmp-container">
-    <div class="bg-cover h-auto"
-        style="background-image: url('https://gmedia.playstation.com/is/image/SIEPDC/this-month-on-playstation-jan-homepage-background-desktop-01-en-03jan24?$4000px$'); height: 60vh; background-position: center;">
-        <div class="flex items-stretch h-full items-end space-x-4 lg:space-x-16 pb-4 lg:pb-10 ml-4 lg:ml-10">
-            <div class="justify-center w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end"
-                style="background-image: url('https://images.unsplash.com/photo-1606318801954-d46d46d3360a?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
-                <p class="inline-block text-white font-medium">Game console</p>
-            </div>
-            <div class="w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end"
-                style="background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2023_09/3596444/230228-gaming-accessories-vl-2x1.jpg')">
-                <p class="inline-block text-white font-medium">Game console</p>
-            </div>
-            <div class="w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end"
-                style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/spider-man-dvd-case-playstation-5-OdlkYJA-600.jpg')">
-                <p class="inline-block text-black font-medium">Game console</p>
+        <div class="bg-cover h-auto"
+            style="background-image: url('https://gmedia.playstation.com/is/image/SIEPDC/this-month-on-playstation-jan-homepage-background-desktop-01-en-03jan24?$4000px$'); height: 60vh; background-position: center;">
+            <div class="flex items-stretch h-full items-end space-x-4 lg:space-x-16 pb-4 lg:pb-10 mx-4 lg:ml-10">
+                <div class="bg-center w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end hover:-translate-y-6 duration-300 ease-in-out"
+                    style="background-image: url('https://images.unsplash.com/photo-1606318801954-d46d46d3360a?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+                    <p class="text-white font-medium  text-center">Console</p>
+                </div>
+                <div class="bg-center w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end hover:-translate-y-6 duration-300 ease-in-out"
+                    style="background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2023_09/3596444/230228-gaming-accessories-vl-2x1.jpg')">
+                    <p class="text-white font-medium text-center">Accessories</p>
+                </div>
+                <div class="bg-center w-40 lg:w-64 h-40 lg:h-64 bg-cover rounded bg-transparent self-end hover:-translate-y-6 duration-300 ease-in-out"
+                    style="background-image: url('https://atlas-content-cdn.pixelsquid.com/stock-images/spider-man-dvd-case-playstation-5-OdlkYJA-600.jpg')">
+                    <p class="text-black font-medium text-center">Game</p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 </template>
   
 <script setup>
@@ -158,13 +159,14 @@ export default {
 .carousel__prev,
 .carousel__next {
     box-sizing: content-box;
+    color: white;
 }
 
 .top-left {
     position: absolute;
     top: 100px;
     left: 60px;
-    width:100%;
+    width: 100%;
 }
 
 .title-block {
