@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white p-4 rounded-lg shadow-md">
     <img :src="product.imageUrl[0]" alt="Product Image" class="w-full h-64 object-cover rounded-md mb-4">
-    <nuxt-link :to="`${$route.fullPath}/${product.id}`" class="text-xl font-bold mb-2 hover:underline decoration-[#71BDC1]" >{{ product.name }}</nuxt-link>
+    <nuxt-link :to="`${$route.fullPath}/${product.id}`" class="text-xl font-bold hover:text-[#71BDC1] mb-2 hover:underline decoration-[#71BDC1]" >{{ product.name }}</nuxt-link>
     <p class="text-gray-700 mb-2">{{ splitDesLength(product.description) }}</p>
     <p class="text-gray-800 font-semibold mb-2">Price: {{ product.price }} THB</p>
     <button
