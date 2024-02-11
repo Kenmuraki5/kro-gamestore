@@ -33,7 +33,7 @@
                                         <div class="mt-8">
                                             <div class="flow-root">
                                                 <ul role="list" class="-my-6 divide-y divide-gray-200">
-                                                    <li v-for="product in itemsCart" :key="product.id" class="flex py-6">
+                                                    <li v-for="(product, index) in itemsCart" :key="product.id" class="flex py-6">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                             <img :src="product.imageSrc" :alt="product.imageAlt"
@@ -56,7 +56,7 @@
                                                                 <p class="text-gray-500">Qty {{ product.quantity }}</p>
 
                                                                 <div class="flex">
-                                                                    <button type="button"
+                                                                    <button type="button" @click="deleteItemCart()"
                                                                         class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
                                                                 </div>
                                                             </div>
@@ -110,6 +110,7 @@ import { XMarkIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   cartMenu: Boolean,
   itemsCart: Object,
-  totalCost: Number
+  totalCost: Number,
+  deleteItemCart: Function
 });
 </script>

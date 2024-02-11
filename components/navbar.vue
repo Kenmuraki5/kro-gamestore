@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav class="bg-white-800 sticky top-0">
-            <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="mx-auto px-2 sm:px-6 lg:px-8">
                 <div class="relative flex h-16 items-center justify-between">
                     <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                         <!-- Mobile menu button-->
@@ -59,7 +59,7 @@
                                 </svg>
 
                             </button>
-                            <cart :cartMenu="cartMenu" @update:cartMenu="updateCartMenu" :itemsCart="itemsCart" :totalCost="totalCost"></cart>
+                            <cart :cartMenu="cartMenu" @update:cartMenu="updateCartMenu" :deleteItemCart="delItemFromCart" :itemsCart="itemsCart" :totalCost="totalCost"></cart>
 
                         </div>
 

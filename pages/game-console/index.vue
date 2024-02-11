@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <h1 class="text-3xl font-bold mb-4">Products</h1>
+    <h1 class="text-3xl font-bold m-4">Products</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <!-- วนลูปแสดง Card Product สำหรับแต่ละสินค้า -->
      <CardProduct></CardProduct>

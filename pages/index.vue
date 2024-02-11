@@ -21,7 +21,7 @@
             </template>
         </Carousel>
     </div>
-    <div>
+    <!-- <div>
         <Carousel :items-to-show="5.5">
             <Slide v-for="slide in console" :key="slide">
                 <div class="carousel__item2 rounded shadow-md">
@@ -33,13 +33,14 @@
                 <Navigation />
             </template>
         </Carousel>
-    </div>
+    </div> -->
     <section id="game" class="bg-black">
         <div class="mt-10">
             <div class="text-white text-center text-xl py-20"
                 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                 Great games on PS4 and PS5 that are already available or coming soon.
             </div>
+            
             <div class="grid justify-center pb-20">
                 <div class="grid grid-cols-4 m-5 gap-4">
                     <div v-for="i in games.length - games.length % 4" class="flex justify-center">
@@ -141,22 +142,12 @@ export default {
     font-size: 20px;
 }
 
-.carousel__item2 {
-    min-height: 80px;
-    width: 200px;
-    color: white;
-    background: white;
-
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .carousel__prev,
 .carousel__next {
     box-sizing: content-box;
     color: white;
+    border-radius: 50%;
+    background-color: purple;
 }
 
 .top-left {
