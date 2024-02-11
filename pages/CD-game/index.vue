@@ -7,17 +7,19 @@
                     class="w-full h-full object-cover" alt="The Witcher 3: Wild Hunt" />
             </div>
 
-            <div id="content-in-fullscreen" class="hidden md:block absolute inset-y-0 md:m-20 text-white">
-                <div class="text-left md:text-3xl">The Witcher 3: Wild Hunt </div>
-                <div class="mt-10">Bandai Namco Entertainment</div>
-                <div class="mt-10 md:text-2xl">Detail</div>
-                <div class="md:w-64 xl:w-72">Lorem ipsum is a placeholder text commonly used in publishing and graphic design to demonstrate the visual form of a document or a typeface without relying on meaningful </div>
+            <div id="content-in-fullscreen" class="hidden md:block absolute inset-y-0 md:m-12 text-white">
+                <div class="text-left md:text-3xl">{{ product.name  }}</div>
+                <div class="mt-10">{{ product.provider }}</div>
+                <div class="md:w-64 xl:w-96">
+                    {{ product.description }}
+                </div>
+                <div class="mt-10 md:text-2xl">Price : {{ product.price }} ฿</div>
                 <div class="mt-5">Available on PS4 PS5</div>
                 <div class="w-64 mt-10">
                     <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
                         <Slide v-for="slide in product.imageUrl" :key="slide">
-                            <div class="rounded-xl">
-                                <img :src="slide" class="w-full object-cover" />
+                            <div class="rounded-xl carousel__item">
+                                <img :src="slide" class="w-full h-72 object-contain" />
                             </div>
                         </Slide>
                         <template #addons>
@@ -35,9 +37,11 @@
     </section>
     <section class="flex justify-center items-center md:m-0 m-20">
         <div id="content-in-mobile" class="md:hidden block text-black text-center">
-            <div class="text-3xl">The Witcher 3: Wild Hunt</div>
-            <div class="mt-10">Bandai Namco Entertainment</div>
-            <div class="mt-5">Available on PS4 PS5</div>
+            <div class="text-3xl">{{ product.name  }}</div>
+            <div class="mt-10">{{ product.provider }}</div>
+            <div class="text-sm">{{ product.description }}</div>
+            <div class="mt-10 md:text-2xl">Price : {{ product.price }} ฿</div>
+            <div class="mt-5 font-bold">Available on PS4 PS5</div>
             <div class="w-64 m-10">
                 <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
                     <Slide v-for="slide in product.imageUrl" :key="slide">
@@ -67,12 +71,13 @@ const id = route.params.id;
 
 const product = ref({
     id: 1,
-    name: "Playstation 5",
-    description: "The PlayStation 5 is a home video game console developed by Sony Interactive Entertainment. Announced in 2019 as the successor to the PlayStation 4, the PS5 was released on November 12, 2020, in Australia, Japan, New Zealand, North America, and South Korea, with worldwide release following a week later.",
+    name: "The Witcher 3: Wild Hunt ",
+    provider: "Bandai Namco Entertainment",
+    description: "คุณคือเกรัลท์แห่งริเวีย นักล่าสัตว์ประหลาดรับจ้าง ที่ที่คุณยืนอยู่คือทวีปที่แตกแยกด้วยสงครามและเต็มไปด้วยมอนสเตอร์ที่คุณสามารถสำรวจได้ตามใจคุณ ผู้ติดต่อคนปัจจุบันของคุณน่ะหรือ ตามหาสิรี เด็กในคำทำนาย อาวุธที่มีชีวิตที่เปลี่ยนรูปร่างของโลกได้",
     price: 499.99,
     imageUrl: [
-        "https://dl.lnwfile.com/thzz3y.webp",
-        "https://media-cdn.bnn.in.th/266271/Sony-PlayStation-5-Standard-(C-Chassis)-5.1-square_medium.jpg"
+        "https://down-th.img.susercontent.com/file/th-11134207-7r990-lmdiywyaenwu55",
+        "https://images.g2a.com/360x600/1x1x1/the-witcher-3-wild-hunt-goty-edition-pc-steam-account-account-global-i10000026141053/6026806b7e696c7fb045f672"
     ]
 });
 
@@ -82,9 +87,9 @@ const addToCart = (product) => {
 </script>
 <style>
 .carousel__item {
-    border-radius: 90px;
+    background-color: black;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-</style>
+}</style>
