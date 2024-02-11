@@ -17,6 +17,9 @@ dependencies:
   nuxt:
     specifier: ^3.10.1
     version: 3.10.1(vite@5.0.12)
+  sweetalert2:
+    specifier: ^11.10.5
+    version: 11.10.5
   vue:
     specifier: ^3.4.15
     version: 3.4.15
@@ -5782,6 +5785,10 @@ packages:
       css-what: 6.1.0
       csso: 5.0.5
       picocolors: 1.0.0
+    dev: false
+
+  /sweetalert2@11.10.5:
+    resolution: {integrity: sha512-q9eE3EKhMcpIDU/Xcz7z5lk8axCGkgxwK47gXGrrfncnBJWxHPPHnBVAjfsVXcTt8Yi8U6HNEcBRSu+qGeyFdA==}
     dev: false
 
   /system-architecture@0.1.0:
