@@ -1,5 +1,6 @@
 <template>
     <Navbar/>
-    <slot></slot>
+    <slot></slot><!-- page -->
+    
     <Customfooter/>
 </template> 
