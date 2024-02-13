@@ -17,26 +17,28 @@
       <h1 style="text-align: center;">Top 10 Console Hot deals</h1>
       <div class="grid grid-cols-5 m-5 gap-4 ">
         <div v-for="(game, index) in games" :key="index" class="grid grid-rows-2 flex justify-center hover:-translate-y-6 duration-300 ease-in-out">
-          <img class="w-32 xl:w-64 rounded" :src="game.src">
+          <img class="w-32 xl:w-64 rounded game-img justify-items-center justify-self-center" :src="game.src">
           <h1 class="game-name">{{ game.name }}</h1>
         </div>
       </div>
     </div>
 
-
+    <div class="mt-4">
     <h1 class="hot-deals-title">Hot deal games</h1>
     <Carousel :items-to-show="5.5">
-            <Slide v-for="slide in games" :key="slide">
-                <div class="carousel__item2 rounded shadow-md">
-                    <img :src=slide.src>
-                </div>
-            </Slide>
-            
+      <Slide v-for="(game, index) in games" :key="index">
+        <div class="carousel__item2 rounded shadow-md">
+          <img :src="game.src" alt="Game Image">
+          <div class="game-label">{{ game.name }}</div> <!-- Game label -->
+        </div>
+      </Slide>
 
-            <template #addons>
-                <Navigation />
-            </template>
-        </Carousel>
+      <template #addons>
+        <Navigation />
+      </template>
+    </Carousel>
+</div>
+
   </template>
   
 <script setup>
@@ -85,6 +87,20 @@ export default {
     font-weight: bold;
     color: #71BDC1;
 }
+.game-img {
+    justify-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #71BDC1;
+}
+.game-lebel {
+    text-align: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #71BDC1;
+}
 .hot-deals-title {
     text-align: left;
     font-size: 2rem;
@@ -92,4 +108,5 @@ export default {
     color: #FF5733;
 
 }
+
 </style>
