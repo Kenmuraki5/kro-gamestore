@@ -5,7 +5,7 @@
                 <div v-for="product in games" :key="product.id" class="group relative">
                     <NuxtLink :to="`${$route.fullPath}/${product.id}`">
                         <div
-                            class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 md:h-72 h-64">
+                            class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 md:h-72 sm:h-60 h-40">
                             <img :src="product.src" :alt="product.imageAlt"
                                 class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
                         </div>
