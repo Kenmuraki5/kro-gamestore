@@ -21,10 +21,14 @@
     <div class=" ml-10 mr-10">
       <Carousel :items-to-show="5.5">
         <Slide v-for="(game, index) in game_type.games" :key="index">
-          <div class="grid grid-rows-2 m-5 gap-4 carousel__item2 rounded" v-if="index < games.length">
-            <img :src="game.src" alt="Game Image" v-if="game.src != ''" />
+          <div class="grid grid-rows-1.5 m-5 gap-4 carousel__item2 rounded" v-if="index < games.length">
             <div>
-              <h1 class="game-label text-black">{{ game.name }}</h1>
+              <img :src="game.src" alt="Game Image" v-if="game.src != ''" />
+            </div>
+            
+            <div class="h-20">
+              <h1 class="game-label text-black text-2xl">{{ game.name }}</h1>
+              <h2>some Desc</h2>
             </div>
           </div>
         </Slide>
