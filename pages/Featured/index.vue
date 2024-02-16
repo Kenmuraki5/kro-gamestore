@@ -1,17 +1,4 @@
-<!-- <template>
-    <div>
 
-    Top 10 Console Hot deals
-
-    <div class="grid grid-cols-4 m-5 gap-4 ">
-        <div v-for="i in games.length - games.length % 4" class="grid grid-rows-2 flex justify-center hover:-translate-y-6 duration-300 ease-in-out">
-            <img class="w-32 xl:w-64 rounded"
-                :src="games[i - 1].src">
-            <H1 class="game-name">{{ games[i - 1].name }}</H1>
-        </div>
-    </div>
-</div>
-</template> -->
 <template>
   <div>
     <h1 style="text-align: center;">Top 10 Console Hot deals</h1>
@@ -29,6 +16,7 @@
     <h1 class="hot-deals-title">Hot deal games 
       <!-- <span class="text-base absolute right-12 h-16 w-16 decoration-slate-100">View more</span> -->
     </h1>
+    <h2 class="viewMore">View more</h2>
     
 
     <Carousel :items-to-show="5.5">
@@ -119,5 +107,10 @@ const console = [
   font-weight: bold;
   color: #FF5733;
 
+}
+.viewMore{
+  position: relative;
+  color: #000;
+  right:50%;
 }
 </style>
