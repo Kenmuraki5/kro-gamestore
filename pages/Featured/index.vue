@@ -1,43 +1,44 @@
 
 <template>
   <div>
-    <h1 style="text-align: center;">Top 10 Console Hot deals</h1>
+    <h1 style="text-align: center; " class="hot-deals-title">Top 10 Console Hot deals</h1>
 
     <div class="grid grid-cols-5 m-5 gap-4 ">
       <div v-for="(game, index) in games" :key="index"
         class="grid grid-rows-2 flex justify-center hover:-translate-y-6 duration-300 ease-in-out">
-        <img class="w-32 xl:w-64 rounded game-img justify-items-center justify-self-center" :src="game.src" v-if="game.src != ''">
+        <img class="w-32 xl:w-64 rounded game-img justify-items-center justify-self-center" :src="game.src"
+          v-if="game.src != ''">
         <h1 class="game-name" v-if="game.src != ''">{{ game.name }}</h1>
       </div>
     </div>
   </div>
 
-  <div class="m-4">
-    <h1 class="hot-deals-title ml-10"> Hot CD games 
+  <div class="m-4" v-for="(game_type, type_index) in game_types" :key="type_index">
+    <h1 class="hot-deals-title ml-10"> {{ game_type.name }}
       <!-- <span class="text-base absolute right-12 h-16 w-16 decoration-slate-100">View more</span> -->
     </h1>
-    <h2 class="viewMore">View more</h2>
+    <!-- <h2 class="viewMore">View more</h2> -->
     <div class=" ml-10 mr-10">
-    <Carousel :items-to-show="5.5">
-      <Slide v-for="(game, index) in games" :key="index">
-        <div class="grid grid-rows-2 m-5 gap-4 carousel__item2 rounded" v-if="index < games.length ">
-          <img :src="game.src" alt="Game Image" v-if="game.src != ''"/>
-          <div>
-            <h1 class="game-label text-black">{{ game.name }}</h1>
+      <Carousel :items-to-show="5.5">
+        <Slide v-for="(game, index) in game_type.games" :key="index">
+          <div class="grid grid-rows-2 m-5 gap-4 carousel__item2 rounded" v-if="index < games.length">
+            <img :src="game.src" alt="Game Image" v-if="game.src != ''" />
+            <div>
+              <h1 class="game-label text-black">{{ game.name }}</h1>
+            </div>
           </div>
-        </div>
-      </Slide>
-      <!-- viewMore -->
-      <Slide v-if="games.length > 0" :key="'extra_slide'">
-        <NuxtLink to="/game-console">
-          <h1 class="game-label view-more m-2 text-blue-700 text-3xl mb-16"> View More</h1>
-        </NuxtLink>
-    </Slide>
-      <template #addons>
-        <Navigation />
-      </template>
-    </Carousel>
-  </div>
+        </Slide>
+        <!-- viewMore -->
+        <Slide v-if="game_types.length > 0" :key="'extra_slide'">
+          <NuxtLink :to= game_type.link>
+            <h1 class="game-label view-more m-2 text-blue-700 text-3xl mb-16"> View More</h1>
+          </NuxtLink>
+        </Slide>
+        <template #addons>
+          <Navigation />
+        </template>
+      </Carousel>
+    </div>
   </div>
 </template>
   
@@ -60,9 +61,59 @@ const games = [
   { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Hogwarts Legacy" },
   { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Last hog" }
   // { src: "", name: "View more" }
-  
+
 ]
 // games.push({src:"", name:"View more"})
+
+
+const game_types = [
+  {
+    name: "CD games",
+    games: [
+      {
+        src: "https://gmedia.playstation.com/is/image/SIEPDC/ea-sports-fc-store-art-01-en-27sept23?$1200px$"
+        , name: 'EA Sports FIFA 24'
+      },
+      {
+        src: "https://gmedia.playstation.com/is/image/SIEPDC/hogwarts-packshot-thumb-01-en-12jan21.jpg?$1200px$"
+        , name: "Hogwarts Legacy"
+      },
+      { src: "https://gmedia.playstation.com/is/image/SIEPDC/alan-wake-pack-01-en-30oct23?$1200px$", name: "alan-wake" },
+      { src: "https://gmedia.playstation.com/is/image/SIEPDC/call-of-duty-modern-warfare-3-pack-01-en-22aug23?$1200px$", name: "call-of-duty" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202009/3021/B2aUYFC0qUAkNnjbTHRyhrg3.png", name: "Hogwarts Legacy" },
+      { src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEiLt4Z7fHkS_UFcP2kd8F0Fogaq31wU195g3Q4RZBFYFaFNog0CGDTejP0wDHF09ibnk&usqp=CAU", name: "Hogwarts Legacy" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Hogwarts Legacy" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Hogwarts Legacy" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Hogwarts Legacy" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Last hog" }
+
+    ],
+    link: "/game-console"
+  },
+  {
+    name: "Console games",
+    games: [
+      {
+        src: "https://gmedia.playstation.com/is/image/SIEPDC/ea-sports-fc-store-art-01-en-27sept23?$1200px$"
+        , name: 'EA Sports FIFA 24'
+      },
+      {
+        src: "https://gmedia.playstation.com/is/image/SIEPDC/hogwarts-packshot-thumb-01-en-12jan21.jpg?$1200px$"
+        , name: "Hogwarts Legacy"
+      },
+      { src: "https://gmedia.playstation.com/is/image/SIEPDC/alan-wake-pack-01-en-30oct23?$1200px$", name: "alan-wake" },
+      { src: "https://gmedia.playstation.com/is/image/SIEPDC/call-of-duty-modern-warfare-3-pack-01-en-22aug23?$1200px$", name: "call-of-duty" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202009/3021/B2aUYFC0qUAkNnjbTHRyhrg3.png", name: "Hogwarts Legacy" },
+      { src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEiLt4Z7fHkS_UFcP2kd8F0Fogaq31wU195g3Q4RZBFYFaFNog0CGDTejP0wDHF09ibnk&usqp=CAU", name: "Hogwarts Legacy" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Hogwarts Legacy" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Hogwarts Legacy" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Hogwarts Legacy" },
+      { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Last hog" }
+
+    ],
+    link:"/game-console"
+  },
+]
 
 const console = [
   { src: "https://dl.lnwfile.com/thzz3y.webp" },
@@ -106,12 +157,13 @@ const console = [
   text-align: left;
   font-size: 2rem;
   font-weight: bold;
-  color: #FF5733;
+  /* color: #FF5733; */
+  color: #000;
 
 }
-.viewMore{
+
+.viewMore {
   position: relative;
   color: #000;
-  right:50%;
-}
-</style>
+  right: 50%;
+}</style>
