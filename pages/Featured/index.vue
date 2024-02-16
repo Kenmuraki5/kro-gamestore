@@ -39,7 +39,7 @@
             <h1 class="game-label text-black">{{ game.name }}</h1>
           </div>
         </div>
-        <div class="grid grid-rows-2 m-5 gap-4 carousel__item2 rounded"  v-if="index === games.length - 1">
+        <div class="carousel__item2 rounded"  v-if="index === games.length - 1">
           <!-- <img :src="game.src" alt="Game Image"> -->
 
             <h1 class="game-label view-more text-black"> View More</h1>
@@ -86,17 +86,6 @@ const console = [
 ]
 </script>
 
-<!-- <script>
-export default {
-  async asyncData({ $content }) {
-    const site = await $content('site').fetch();
-
-    return {
-      site
-    };
-  }
-};
-</script> -->
 
 <style>
 .game-name {
