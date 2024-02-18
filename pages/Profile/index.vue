@@ -3,19 +3,22 @@
         <div class="profile-header flex justify-start items-center m-5">
             <div class="profile-image rounded-full overflow-hidden mr-4 w-32 h-32">
                 <img :src="user.avatar" alt="Profile avatar" class="min-w-200 min-h-200 object-cover" />
-                <div class="absolute inset-0 flex items-center justify-center text-gray-400">
-                    
-                <input type="file" @change="uploadAvatar" class="hidden" />
-                    <span class="text-center">
-                        Drop your profile picture here<br/>
-                        or click to browse
-                    </span>
-                </div>
+
             </div>
             <div class="profile-info ml-5">
                 <h2 class="text-3xl font-bold text-gray-800">{{ user.name }}</h2>
                 <p class="text-gray-600">{{ user.username }}</p>
                 <p class="text-gray-600">{{ user.emailAddress }}</p>
+                <div class="flex items-center justify-center text-gray-400 border-2">
+                    
+                    <input type="file" @change="uploadAvatar" class="hidden" />
+                        <span class="text-center bg-gray-100">
+                            Drop your profile picture here<br/>
+                            or click to browse
+                        </span>
+                    </div>
+
+                    
             </div>
         </div>
         <div class="profile-content mt-8">
@@ -38,7 +41,7 @@
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
                         <label for="password">Password:</label> <input type="password" id="password" v-model="user.password"
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
-                        <label for="confirmPassword">Confirm Password:</label> <input type="password" id="confirmPassword"
+                        <label for="confirmPassword">Confirm Password: </label> <input type="password" id="confirmPassword"
                             v-model="user.confirmPassword"
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
                         <button @click="editProfile"
@@ -76,6 +79,7 @@ var user = {
 
 </script>
 <script>
+
     function uploadAvatar(event) {
         const file = event.target.files[0];
         // Example: Upload the file to a server and update user.avatar with the returned URL
