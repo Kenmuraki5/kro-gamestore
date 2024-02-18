@@ -10,15 +10,17 @@
                 <p class="text-gray-600">{{ user.username }}</p>
                 <p class="text-gray-600">{{ user.emailAddress }}</p>
                 <div class="flex items-center justify-center text-gray-400 border-2">
-                    
-                    <input type="file" @change="uploadAvatar" class="hidden" />
-                        <span class="text-center bg-gray-100">
-                            Drop your profile picture here<br/>
-                            or click to browse
-                        </span>
-                    </div>
 
-                    
+                    <input type="file" ref="fileInput" @change="handleFileInput">
+                    <div class="drop-area" @dragover.prevent="dragOver" @drop.prevent="dropFile"
+                        @click="$refs.fileInput.click()">
+                        <!-- <p>Drag and drop your profile picture here, or click to select</p> -->
+                    </div>
+                    <img v-if="imageUrl" :src="imageUrl" alt="Profile Image" style="max-width: 200px;">
+
+                </div>
+
+
             </div>
         </div>
         <div class="profile-content mt-8">
@@ -46,7 +48,7 @@
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
                         <button @click="editProfile"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save
-                           </button>
+                        </button>
                     </div>
                 </div>
                 <!-- <div class="section system-settings mt-8 bg-white shadow-md rounded-md p-4">
@@ -80,15 +82,15 @@ var user = {
 </script>
 <script>
 
-    function uploadAvatar(event) {
-        const file = event.target.files[0];
-        // Example: Upload the file to a server and update user.avatar with the returned URL
-        // For demonstration, I'll just set user.avatar to a local URL
-        this.user.avatar = URL.createObjectURL(file);
-    };
-    function editProfile() {
-        // Handle profile edit here
-    }
+function uploadAvatar(event) {
+    const file = event.target.files[0];
+    // Example: Upload the file to a server and update user.avatar with the returned URL
+    // For demonstration, I'll just set user.avatar to a local URL
+    this.user.avatar = URL.createObjectURL(file);
+};
+function editProfile() {
+    // Handle profile edit here
+}
 
 </script>
   
@@ -139,4 +141,5 @@ var user = {
     color: #003d7a;
 }
 
-/* Add styles for other elements like labels, values, buttons, etc. */</style>
+/* Add styles for other elements like labels, values, buttons, etc. */
+</style>
