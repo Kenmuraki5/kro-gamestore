@@ -72,29 +72,44 @@
                 </div> -->
 
                 <div class=" address-form section system-settings mt-8 bg-white shadow-md rounded-md p-4">
-                    <h1 class="text-xl font-bold text-gray-800 mb-4"> Address </h1>
-                    <label for="address" class="block mb-2">ที่อยู่:</label>
+                    <h1 class="text-xl font-bold text-gray-800 mb-4"> Address Information</h1>
+                    <label for="address" class="block mb-2">Address:</label>
                     <input type="text" id="address" v-model="user.address"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกที่อยู่ของคุณ" />
 
-                    <label for="province" class="block mb-2">จังหวัด:</label>
-                    <input type="text" id="province" v-model="user.province"
-                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
-                        placeholder="กรอกจังหวัดของคุณ" />
 
-                    <label for="district" class="block mb-2">อำเภอ:</label>
-                    <input type="text" id="district" v-model="user.district"
+                    <label for="province" class="block mb-2">Province:</label>
+                    <!-- <input type="text" id="province" v-model="user.province"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
-                        placeholder="กรอกอำเภอของคุณ" />
+                        placeholder="กรอกจังหวัดของคุณ" /> -->
+                    <select id="province" v-model="user.province"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4">
+                        <option v-for="province in provinces" :key="province.id" :value="province.name_en">{{ province.name_en }}
+                        </option>
+                    </select>
 
-                    <label for="subdistrict" class="block mb-2">ตำบล:</label>
-                    <input type="text" id="subdistrict" v-model="user.subdistrict"
+                    <label for="district" class="block mb-2">District:</label>
+                    <!-- <input type="text" id="district" v-model="user.district"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
-                        placeholder="กรอกตำบลของคุณ" />
+                        placeholder="กรอกอำเภอของคุณ" /> -->
+                    <select id="district" v-model="user.district"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4">
+                        <option v-for="district in districts" :key="district.id" :value="district.name_en">{{ district.name_en }}
+                        </option>
+                    </select>
 
+                    <label for="subdistrict" class="block mb-2">Subdistrict:</label>
+                    <!-- <input type="text" id="subdistrict" v-model="user.subdistrict"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
+                        placeholder="กรอกตำบลของคุณ" /> -->
+                    <select id="subdistrict" v-model="user.subdistrict"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4">
+                        <option v-for="subdistrict in subdistricts" :key="subdistrict.id" :value="subdistrict.name_en">{{
+                            subdistrict.name_en }}</option>
+                    </select>
                     <label for="postal-code" class="block mb-2">รหัสไปรษณีย์:</label>
-                    <input type="text" id="postal-code" v-model="user.postalCode"
+                    <input type="number" id="postal-code" v-model="user.postalCode"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกรหัสไปรษณีย์ของคุณ" />
                 </div>
@@ -107,12 +122,56 @@
 </template>
   
 <script setup>
+// const provinces = ref([]);
+// const districts = ref([]);
+// const subdistricts = ref([]);
+
+var subdistricts = require("../../assets/static/thai_amphures.json");
+var districts = require("../../assets/static/thai_amphures.json");
+var provinces = require("../../assets/static/thai_provinces.json");
+// provinces = thai_tambons
+// console.log(thai_amphures);
+// async function fetchData() {
+//     try {
+//         const responseProvinces = await fetch('../../assets/static/thai_provinces.json');
+//         // const responseProvinces = await fetch( "https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province.json");
+
+//         const responseDistricts = await fetch('/assets/static/thai_amphures.json');
+//         const responseSubdistricts = await fetch('/assets/static/thai_tambons.json');
+
+//         if (!responseProvinces.ok || !responseDistricts.ok || !responseSubdistricts.ok) {
+//             throw new Error('Failed to fetch data');
+//         }
+
+//         provinces.value = await responseProvinces.json();
+//         districts.value = await responseDistricts.json();
+//         subdistricts.value = await responseSubdistricts.json();
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
+
+// fetchData();
 // import {amphures} from "./amphures";
 // import {provinces} from "./provinces";
 // import {tambons} from "./tambons";
 
 // // amphures
 // console.log(amphures);
+
+// const amphures = ref({})
+// const tambons = require("../../content/thai_tambons.json")
+// const amphures = require("../../content/thai_tambons.json")
+// const provinces = require("../../content/thai_provinces.json")
+
+// async fetch() {
+
+//     await const amphures = await fetch("../../content/thai_amphures.json");
+//     await const tambons = await fetch("../../content/thai_tambons.json");
+
+//     this.provinces = await response.json();
+//   }
+// onMounted(async)
 
 var user = {
     name: "Owen", // Replace with actual user data
@@ -209,5 +268,4 @@ function editProfile() {
 
 }
 
-/* Add styles for other elements like labels, values, buttons, etc. */
-</style>
+/* Add styles for other elements like labels, values, buttons, etc. */</style>

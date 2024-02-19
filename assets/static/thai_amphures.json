@@ -1,5 +1,4 @@
-
-export default amphures = [
+[
   {
     "id": 1001,
     "name_th": "เขตพระนคร",
