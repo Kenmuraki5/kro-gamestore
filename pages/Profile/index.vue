@@ -19,7 +19,7 @@
                         @click="$refs.fileInput.click()">
                         <!-- <p>Drag and drop your profile picture here, or click to select</p> -->
                     </div>
-                    <img v-if="imageUrl" :src="imageUrl" alt="Profile Image" style="max-width: 200px;">
+                    <!-- <img v-if="user.avatar" :src="user.avatar" alt="Profile Image" style="max-width: 200px;"> -->
 
                 </div>
 
