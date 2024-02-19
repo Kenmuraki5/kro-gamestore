@@ -92,7 +92,7 @@ const game_types = [
       { src: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0106/1d4e7b816927506b5ccdefb10b365312cc1a69c88335a8b0.png", name: "Last hog" }
 
     ],
-    link: "/game-console"
+    link: "/CD-game"
   },
   {
     name: "Console games",
