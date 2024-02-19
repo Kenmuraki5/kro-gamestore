@@ -39,19 +39,26 @@
                     </ul> -->
                     <div class="profile-form mt-8"> <label for="name">Name:</label> <input type="text" id="name"
                             v-model="user.name"
-                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
-                        <label for="username">Username:</label> <input type="text" id="username" v-model="user.username"
-                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
-                        <label for="email">Email Address:</label> <input type="email" id="email" v-model="user.emailAddress"
-                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
-                        <label for="password">Password:</label> <input type="password" id="password" v-model="user.password"
-                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
-                        <label for="confirmPassword">Confirm Password: </label> <input type="password" id="confirmPassword"
-                            v-model="user.confirmPassword"
-                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" />
-                        <button @click="editProfile"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">Save
-                        </button>
+                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
+                        <label for="username" class="block mb-2">Username:</label> <input type="text" id="username"
+                            v-model="user.username"
+                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
+                        <label for="email" class="block mb-2">Email Address:</label> <input type="email" id="email"
+                            v-model="user.emailAddress"
+                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
+                        <label for="password" class="block mb-2">Password:</label> <input type="password" id="password"
+                            v-model="user.password"
+                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
+                        <label for="confirmPassword" class="block mb-2">Confirm Password: </label> <input type="password"
+                            id="confirmPassword" v-model="user.confirmPassword"
+                            class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
+                        <!-- <p v-if="user.confirmPassword == user.password && (user.password != '' )" class="text-green-600">Passwords match!</p>
+                        <p v-else-if="user.confirmPassword !== user.password" class="text-red-600">Passwords do not match!</p> -->
+
+
+                        <!-- <p v-if="passwordsMatch" class="text-green-600">Passwords match!</p>
+                        <p v-else-if="user.confirmPassword !== '' || !passwordsMatch" class="text-red-600">Passwords do not match!</p> -->
+
                     </div>
                 </div>
                 <!-- <div class="section system-settings mt-8 bg-white shadow-md rounded-md p-4">
@@ -64,40 +71,49 @@
                     </ul>
                 </div> -->
 
-                <div class="address-form">
+                <div class=" address-form section system-settings mt-8 bg-white shadow-md rounded-md p-4">
                     <h1 class="text-xl font-bold text-gray-800 mb-4"> Address </h1>
                     <label for="address" class="block mb-2">ที่อยู่:</label>
-                    <input type="text" id="address" v-model="address"
+                    <input type="text" id="address" v-model="user.address"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกที่อยู่ของคุณ" />
 
                     <label for="province" class="block mb-2">จังหวัด:</label>
-                    <input type="text" id="province" v-model="province"
+                    <input type="text" id="province" v-model="user.province"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกจังหวัดของคุณ" />
 
                     <label for="district" class="block mb-2">อำเภอ:</label>
-                    <input type="text" id="district" v-model="district"
+                    <input type="text" id="district" v-model="user.district"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกอำเภอของคุณ" />
 
                     <label for="subdistrict" class="block mb-2">ตำบล:</label>
-                    <input type="text" id="subdistrict" v-model="subdistrict"
+                    <input type="text" id="subdistrict" v-model="user.subdistrict"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกตำบลของคุณ" />
 
                     <label for="postal-code" class="block mb-2">รหัสไปรษณีย์:</label>
-                    <input type="text" id="postal-code" v-model="postalCode"
+                    <input type="text" id="postal-code" v-model="user.postalCode"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกรหัสไปรษณีย์ของคุณ" />
                 </div>
-
+                <button @click="editProfile"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">Save
+                </button>
             </div>
         </div>
     </div>
 </template>
   
 <script setup>
+// import {amphures} from "./amphures";
+// import {provinces} from "./provinces";
+// import {tambons} from "./tambons";
+
+// // amphures
+// console.log(amphures);
+
 var user = {
     name: "Owen", // Replace with actual user data
     username: "OwenUsername",
@@ -108,12 +124,25 @@ var user = {
     privacySettings: "",
     password: "",
     confirmPassword: "",
-    // user data
+    address: "",
+    province: "",
+    district: "",
+    subdistrict: "",
+    postalCode: "",
+
 }
 
 </script>
 <script>
 
+// const passwordsMatch = computed(() => {
+//     return user.password === user.confirmPassword;
+// });
+
+// const checkPasswords = () => {
+//     // Trigger the computed property to recompute
+//     passwordsMatch.value;
+// };
 function uploadAvatar(event) {
     const file = event.target.files[0];
     // Example: Upload the file to a server and update user.avatar with the returned URL
@@ -180,4 +209,5 @@ function editProfile() {
 
 }
 
-/* Add styles for other elements like labels, values, buttons, etc. */</style>
+/* Add styles for other elements like labels, values, buttons, etc. */
+</style>
