@@ -1,9 +1,10 @@
 <template>
     <div class="profile-page  pt-16 px-4">
-        <h1 class="text-4xl font-bold  text-gray-900 mb-5 ml-10 " >Profile </h1>
+        <h1 class="text-4xl font-bold  text-gray-900 mb-5 ml-10 ">Profile </h1>
         <div class="profile-header flex justify-start items-center ml-5">
             <div class="profile-image rounded-full overflow-hidden mr-4 w-40 h-40">
-                <img :src="user.avatar" alt="Profile avatar" class="profile-avatar min-w-200 min-h-200 object-cover w-full h-full" />
+                <img :src="user.avatar" alt="Profile avatar"
+                    class="profile-avatar min-w-200 min-h-200 object-cover w-full h-full" />
 
             </div>
             <div class="profile-info  ml-5">
@@ -11,15 +12,21 @@
                 <p class="text-gray-600 m-1">{{ user.username }}</p>
                 <p class="text-gray-600 m-1 decoration-2 underline decoration-sky-500">{{ user.emailAddress }}</p>
                 <h3 class="mt-3">Change picture</h3>
-                <div class="flex items-center justify-center text-gray-400 border-2 bordor-solid ">
-                    <!-- <label for="fileInput"> Avatar</label> -->
-                    <input type="file" ref="fileInput" @change="handleFileInput">
+                <!-- <div class="flex items-center justify-center text-gray-400 border-2 bordor-solid "> -->
+                <!-- <label for="fileInput"> Avatar</label> -->
+                <!-- <input type="file" ref="fileInput" @change="handleFileInput">
                     <div class="drop-area" @dragover.prevent="dragOver" @drop.prevent="dropFile"
                         @click="$refs.fileInput.click()">
-                        <!-- <p>Drag and drop your profile picture here, or click to select</p> -->
+                        
                     </div>
-                    <img v-if="imageUrl" :src="imageUrl" alt="Profile Image" style="max-width: 200px;">
-
+                    <img v-if="imageUrl" :src="imageUrl" alt="Profile Image" style="max-width: 200px;"> -->
+                <div
+                    class="flex items-center justify-center text-gray-400 border border-dashed border-gray-300 rounded-md py-2 px-4">
+                    <input type="file" ref="fileInput" @change="handleFileInput" class="hidden" />
+                    <button @click="$refs.fileInput.click()" class="text-blue-500 hover:text-blue-700 focus:outline-none">
+                        Upload Image
+                    </button>
+                    <!-- </div> -->
                 </div>
 
 
@@ -68,6 +75,7 @@
 </template>
   
 <script setup>
+import { ref } from 'vue';
 var user = {
     name: "Owen", // Replace with actual user data
     username: "OwenUsername",
@@ -80,6 +88,24 @@ var user = {
     confirmPassword: "",
     // user data
 }
+const imageUrl = ref(null);
+
+const handleFileInput = (event) => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    imageUrl.value = reader.result;
+    // Here you can also upload the image to your server if needed
+    // For now, let's just update the user's avatar
+    user.avatar = reader.result;
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+};
+
 
 </script>
 <script>
@@ -142,12 +168,12 @@ function editProfile() {
 .profile-page a:active {
     color: #003d7a;
 }
-.profile-avatar{
+
+.profile-avatar {
     /* width: 300px;
     height: 300px; */
     /* transform: scale(); */
 
 }
 
-/* Add styles for other elements like labels, values, buttons, etc. */
-</style>
+/* Add styles for other elements like labels, values, buttons, etc. */</style>
