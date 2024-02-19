@@ -1,9 +1,10 @@
 <template>
     <div class="profile-page  pt-16 px-4">
-        <h1 class="text-4xl font-bold  text-gray-900 mb-5 ml-10 " >Profile </h1>
+        <h1 class="text-4xl font-bold  text-gray-900 mb-5 ml-10 ">Profile </h1>
         <div class="profile-header flex justify-start items-center ml-5">
             <div class="profile-image rounded-full overflow-hidden mr-4 w-40 h-40">
-                <img :src="user.avatar" alt="Profile avatar" class="profile-avatar min-w-200 min-h-200 object-cover w-full h-full" />
+                <img :src="user.avatar" alt="Profile avatar"
+                    class="profile-avatar min-w-200 min-h-200 object-cover w-full h-full" />
 
             </div>
             <div class="profile-info  ml-5">
@@ -62,6 +63,35 @@
                             user.privacySettings }}</span> </li>
                     </ul>
                 </div> -->
+
+                <div class="address-form">
+                    <h1 class="text-xl font-bold text-gray-800 mb-4"> Address </h1>
+                    <label for="address" class="block mb-2">ที่อยู่:</label>
+                    <input type="text" id="address" v-model="address"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
+                        placeholder="กรอกที่อยู่ของคุณ" />
+
+                    <label for="province" class="block mb-2">จังหวัด:</label>
+                    <input type="text" id="province" v-model="province"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
+                        placeholder="กรอกจังหวัดของคุณ" />
+
+                    <label for="district" class="block mb-2">อำเภอ:</label>
+                    <input type="text" id="district" v-model="district"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
+                        placeholder="กรอกอำเภอของคุณ" />
+
+                    <label for="subdistrict" class="block mb-2">ตำบล:</label>
+                    <input type="text" id="subdistrict" v-model="subdistrict"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
+                        placeholder="กรอกตำบลของคุณ" />
+
+                    <label for="postal-code" class="block mb-2">รหัสไปรษณีย์:</label>
+                    <input type="text" id="postal-code" v-model="postalCode"
+                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
+                        placeholder="กรอกรหัสไปรษณีย์ของคุณ" />
+                </div>
+
             </div>
         </div>
     </div>
@@ -142,12 +172,12 @@ function editProfile() {
 .profile-page a:active {
     color: #003d7a;
 }
-.profile-avatar{
+
+.profile-avatar {
     /* width: 300px;
     height: 300px; */
     /* transform: scale(); */
 
 }
 
-/* Add styles for other elements like labels, values, buttons, etc. */
-</style>
+/* Add styles for other elements like labels, values, buttons, etc. */</style>
