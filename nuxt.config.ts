@@ -4,6 +4,12 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
     "vue3-carousel-nuxt",
-    '@nuxtjs/google-fonts'
+    '@nuxtjs/google-fonts',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt'
+    
+
+    
+
   ]
 })

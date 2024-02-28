@@ -36,7 +36,7 @@
                                                     <li v-for="(product, index) in itemsCart" :key="product.id" class="flex py-6">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                            <img :src="product.imageSrc" :alt="product.imageAlt"
+                                                            <img :src="product.imageUrl[0]" :alt="product.imageAlt"
                                                                 class="h-full w-full object-cover object-center" />
                                                         </div>
 
@@ -53,7 +53,7 @@
                                                                 </p>
                                                             </div>
                                                             <div class="flex flex-1 items-end justify-between text-sm">
-                                                                <p class="text-gray-500">Qty {{ product.quantity }}</p>
+                                                                <!-- <p class="text-gray-500">Qty {{ product.quantity }}</p> -->
 
                                                                 <div class="flex">
                                                                     <button type="button" @click="deleteItemCart()"

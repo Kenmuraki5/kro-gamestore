@@ -38,27 +38,18 @@
         <div class="px-4 pt-8">
             <p class="text-xl font-medium">Order Summary</p>
             <p class="text-gray-400">Check your items. And select a suitable shipping method.</p>
-            <div class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
+            <div class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6" v-for="item in carts">
                 <div class="flex flex-col rounded-lg bg-white sm:flex-row">
                     <img class="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                        src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                        :src=item.imageUrl[0]
                         alt="" />
                     <div class="flex w-full flex-col px-4 py-4">
-                        <span class="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
-                        <span class="float-right text-gray-400">42EU - 8.5US</span>
-                        <p class="text-lg font-bold">$138.99</p>
+                        <span class="font-semibold">{{ item.name }}</span>
+                        <span class="float-right text-gray-400">{{ item.description }}</span>
+                        <p class="text-lg font-bold">{{ item.price }}</p>
                     </div>
                 </div>
-                <div class="flex flex-col rounded-lg bg-white sm:flex-row">
-                    <img class="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                        src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                        alt="" />
-                    <div class="flex w-full flex-col px-4 py-4">
-                        <span class="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
-                        <span class="float-right text-gray-400">42EU - 8.5US</span>
-                        <p class="mt-auto text-lg font-bold">$238.99</p>
-                    </div>
-                </div>
+                
             </div>
 
             <p class="mt-8 text-lg font-medium">Shipping Methods</p>
@@ -170,7 +161,7 @@
                 <div class="mt-6 border-t border-b py-2">
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-medium text-gray-900">Subtotal</p>
-                        <p class="font-semibold text-gray-900">$399.00</p>
+                        <p class="font-semibold text-gray-900">{{ cartStore.totalCartItems }}</p>
                     </div>
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-medium text-gray-900">Shipping</p>
@@ -179,11 +170,17 @@
                 </div>
                 <div class="mt-6 flex items-center justify-between">
                     <p class="text-sm font-medium text-gray-900">Total</p>
-                    <p class="text-2xl font-semibold text-gray-900">$408.00</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ cartStore.totalCartItems  }} + $8.00</p>
                 </div>
             </div>
             <button class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Place Order</button>
         </div>
     </div>
 </template>
+<script setup>
+import { useCartStore } from '@/store/cart';
+const cartStore = useCartStore();
 
+const carts = cartStore.cart;
+
+</script>

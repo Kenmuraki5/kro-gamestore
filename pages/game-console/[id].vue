@@ -46,6 +46,13 @@ const product = ref({
     ]
 });
 
+//for fetching data from Golang API
+
+// onMounted(async ()=>{
+//     product = await fetch(`https://fakestoreapi.com/products/${id}`).then(res => res.json());
+//     console.log(product);
+// })
+
 const addToCart = (product) => {
     console.log('Add to cart', product);
 }

@@ -64,7 +64,8 @@
                                 </svg>
 
                             </button>
-                            <cart :cartMenu="cartMenu" @update:cartMenu="updateCartMenu" :deleteItemCart="delItemFromCart" :itemsCart="itemsCart" :totalCost="totalCost"></cart>
+                            <cart :cartMenu="cartMenu" @update:cartMenu="updateCartMenu" :deleteItemCart="delItemFromCart"
+                                :itemsCart="itemsCart" :totalCost="totalCost"></cart>
 
                         </div>
 
@@ -88,9 +89,9 @@
                                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                                 <!-- Active: "bg-gray-100", Not Active: "" -->
-                                
-                                <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 " role="menuitem" tabindex="-1"
-                                    id="user-menu-item-0">Your Profile</a>
+
+                                <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 "
+                                    role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                                     id="user-menu-item-1">Settings</a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
@@ -123,11 +124,16 @@
 </template>
 
 <script setup>
+import { useCartStore } from '@/store/cart';
+const cartStore = useCartStore();
+
 const profileMenu = ref(false);
 const mobileMenu = ref(false);
 const cartMenu = ref(false);
+
+const itemsCart = cartStore.cart;
 const totalCost = computed(() => {
-    return itemsCart.value.reduce((acc, item) => acc + (item.cost * item.quantity), 0)
+    return cartStore.totalCartItems;
 })
 
 const splitNameLegnth = (name) => {
@@ -138,36 +144,37 @@ const splitNameLegnth = (name) => {
 }
 
 const delItemFromCart = (index) => {
-    itemsCart.value.splice(index, 1)
+    cartStore.delItemFromCart(index);
 
 }
 
 const updateCartMenu = (value) => {
-  cartMenu.value = value; // Update the prop in the parent
+    cartMenu.value = value; // Update the prop in the parent
 };
 
-// fetch itemsCart from API 
-const itemsCart = ref([
-    {
-        id: 1,
-        name: "Playstation 5",
-        cost: 20000,
-        quantity:2
-    },
-    {
-        id: 2,
-        name: "Xbox Series X",
-        cost: 25000,
-        quantity:2
-    },
-    {
-        id: 3,
-        name: "Nintendo Switch",
-        cost: 15000,
-        quantity:2
-    },
+// fetch itemsCart from API
+// const itemsCart = ref([
+//     {
+//         id: 1,
+//         name: "Playstation 5",
+//         cost: 20000,
+//         quantity:2
+//     },
+//     {
+//         id: 2,
+//         name: "Xbox Series X",
+//         cost: 25000,
+//         quantity:2
+//     },
+//     {
+//         id: 3,
+//         name: "Nintendo Switch",
+//         cost: 15000,
+//         quantity:2
+//     },
 
-])
+// ])
+
 
 
 </script>
