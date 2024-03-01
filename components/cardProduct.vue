@@ -47,9 +47,8 @@ const props = defineProps({
 
 
 const addToCart = (product) => {
-  console.log(product);  
   cartStore.add(product);
-  // console.log(gameStore.cart);
+  console.log(cartStore.cart);
 };
 
 const splitDesLength = (des) => {

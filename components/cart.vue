@@ -33,7 +33,8 @@
                                         <div class="mt-8">
                                             <div class="flow-root">
                                                 <ul role="list" class="-my-6 divide-y divide-gray-200">
-                                                    <li v-for="(product, index) in itemsCart" :key="product.id" class="flex py-6">
+                                                    <li v-for="(product, index) in itemsCart" :key="product.id"
+                                                        class="flex py-6">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                             <img :src="product.imageUrl[0]" :alt="product.imageAlt"
@@ -47,16 +48,18 @@
                                                                     <h3>
                                                                         <a :href="product.href">{{ product.name }}</a>
                                                                     </h3>
-                                                                    <p class="ml-4">{{ product.price }}</p>
+                                                                    <p class="ml-4">{{ product.price * product.quantity }}</p>
                                                                 </div>
                                                                 <p class="mt-1 text-sm text-gray-500">{{ product.color }}
                                                                 </p>
                                                             </div>
                                                             <div class="flex flex-1 items-end justify-between text-sm">
-                                                                <!-- <p class="text-gray-500">Qty {{ product.quantity }}</p> -->
+                                                                <button type="button" @click="decreaseQuantity(product.id)">-</button>
+                                                                <p class="text-gray-500">Qty {{ product.quantity }}</p>
+                                                                <button type="button" @click="increaseQuantity(product.id)">+</button>
 
                                                                 <div class="flex">
-                                                                    <button type="button" @click="deleteItemCart()"
+                                                                    <button type="button" @click="deleteItemCart(product.id)"
                                                                         class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
                                                                 </div>
                                                             </div>
@@ -75,9 +78,9 @@
                                         <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.
                                         </p>
                                         <div class="mt-6">
-                                            <NuxtLink to="/checkout"
-                                                @click="$emit('update:cartMenu', false)"
-                                                class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</NuxtLink>
+                                            <NuxtLink to="/checkout" @click="$emit('update:cartMenu', false)"
+                                                class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                                                Checkout</NuxtLink>
                                         </div>
                                         <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                             <p>
@@ -102,15 +105,18 @@
 </template>
   
 <script setup>
-import { ref } from 'vue'
+
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 
 
 const props = defineProps({
-  cartMenu: Boolean,
-  itemsCart: Object,
-  totalCost: Number,
-  deleteItemCart: Function
+    cartMenu: Boolean,
+    itemsCart: Object,
+    totalCost: Number,
+    deleteItemCart: Function,
+    increaseQuantity: Function,
+    decreaseQuantity: Function
+    
 });
 </script>

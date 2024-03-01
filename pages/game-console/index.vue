@@ -26,9 +26,8 @@ const products = ref([
 ])
 
 onMounted(() => {
-  const gameConsoleStore = useGameConsoleStore();
-  gameConsoleStore.fetchGameConsole();
-  products.value = gameConsoleStore.gameConsole;
+  const gameConsoleStore = useGameConsoleStore()
+  products.value = gameConsoleStore.gameConsole
 }
 )
 </script>

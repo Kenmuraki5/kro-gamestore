@@ -5,7 +5,7 @@
 
     <div class="grid grid-cols-5 m-5 gap-4 ">
       <div v-for="(game, index) in games" :key="index"
-        class="grid grid-rows-2 flex justify-center hover:-translate-y-6 duration-300 ease-in-out">
+        class="grid grid-rows-2 hover:-translate-y-6 duration-300 ease-in-out">
         <img class="w-32 xl:w-64 rounded game-img justify-items-center justify-self-center" :src="game.src"
           v-if="game.src != ''">
         <h1 class="game-name" v-if="game.src != ''">{{ game.name }}</h1>

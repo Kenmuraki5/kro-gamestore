@@ -28,6 +28,8 @@ export const useGameConsoleStore = defineStore("gameConsole", {
             "https://dl.lnwfile.com/thzz3y.webp",
             "https://media-cdn.bnn.in.th/266271/Sony-PlayStation-5-Standard-(C-Chassis)-5.1-square_medium.jpg",
           ],
+          type: "console",
+
         },
         {
           id: 2,
@@ -36,6 +38,8 @@ export const useGameConsoleStore = defineStore("gameConsole", {
             "Xbox Series X is a home video game console developed by Microsoft. It was announced during E3 2019 as Project Scarlett and was released on November 10, 2020, as the fourth generation of the Xbox console family, succeeding Xbox One.",
           price: 499.99,
           imageUrl: ["https://www.xbox.com/en-US/consoles/xbox-series-x"],
+          type: "console",
+
         },
       ];
     },

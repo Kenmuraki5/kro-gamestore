@@ -25,6 +25,7 @@ export const useGameStore = defineStore("game", {
                     imageUrl: [
                         "https://www.ea.com/games/fifa/fifa-24",
                     ],
+                    type: "game",
                     
                 },
                 {
@@ -35,6 +36,8 @@ export const useGameStore = defineStore("game", {
                     imageUrl: [
                         "https://www.2k.com/games/nba-2k24",
                     ],
+                    type: "game",
+
                 }
              ,
             ];

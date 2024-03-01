@@ -64,8 +64,15 @@
                                 </svg>
 
                             </button>
-                            <cart :cartMenu="cartMenu" @update:cartMenu="updateCartMenu" :deleteItemCart="delItemFromCart"
-                                :itemsCart="itemsCart" :totalCost="totalCost"></cart>
+                            <cart :cartMenu="cartMenu" 
+                                @update:cartMenu="updateCartMenu" 
+                                :itemsCart="itemsCart" 
+                                :totalCost="totalCost"
+                                :deleteItemCart="delItemFromCart"
+                                :increaseQuantity="increaseQuantity"
+                                :decreaseQuantity="decreaseQuantity"
+                            >
+                            </cart>
 
                         </div>
 
@@ -125,7 +132,11 @@
 
 <script setup>
 import { useCartStore } from '@/store/cart';
+import { useGameConsoleStore } from '@/store/console';
+import { useGameStore } from '@/store/game';
 const cartStore = useCartStore();
+const gameConsoleStore = useGameConsoleStore();
+const gameStore = useGameStore();
 
 const profileMenu = ref(false);
 const mobileMenu = ref(false);
@@ -136,45 +147,39 @@ const totalCost = computed(() => {
     return cartStore.totalCartItems;
 })
 
-const splitNameLegnth = (name) => {
-    if (name.length > 5) {
-        return name.substring(0, 5) + '...'
-    }
-    return name
+// const splitNameLegnth = (name) => {
+//     if (name.length > 5) {
+//         return name.substring(0, 5) + '...'
+//     }
+//     return name
+// }
+
+
+//cart function
+const increaseQuantity = (id) => {
+    cartStore.increaseQuantity(id);
+}
+const decreaseQuantity = (id) => {
+    cartStore.decreaseQuantity(id);
+}
+const delItemFromCart = (id) => {
+    cartStore.remove(id);
+
 }
 
-const delItemFromCart = (index) => {
-    cartStore.delItemFromCart(index);
 
-}
 
 const updateCartMenu = (value) => {
     cartMenu.value = value; // Update the prop in the parent
 };
 
-// fetch itemsCart from API
-// const itemsCart = ref([
-//     {
-//         id: 1,
-//         name: "Playstation 5",
-//         cost: 20000,
-//         quantity:2
-//     },
-//     {
-//         id: 2,
-//         name: "Xbox Series X",
-//         cost: 25000,
-//         quantity:2
-//     },
-//     {
-//         id: 3,
-//         name: "Nintendo Switch",
-//         cost: 15000,
-//         quantity:2
-//     },
 
-// ])
 
+onMounted(() => {
+    gameConsoleStore.fetchGameConsole();
+    gameStore.fetchGame();
+
+})
 
 
 </script>

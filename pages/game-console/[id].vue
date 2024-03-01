@@ -31,27 +31,20 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-
+import { useGameConsoleStore } from '~/store/console';
 const route = useRoute();
+const gameConsoleStore = useGameConsoleStore();
 const id = route.params.id;
 
-const product = ref({
-    id: 1,
-    name: "Playstation 5",
-    description: "The PlayStation 5 is a home video game console developed by Sony Interactive Entertainment. Announced in 2019 as the successor to the PlayStation 4, the PS5 was released on November 12, 2020, in Australia, Japan, New Zealand, North America, and South Korea, with worldwide release following a week later.",
-    price: 499.99,
-    imageUrl: [
-        "https://dl.lnwfile.com/thzz3y.webp",
-        "https://media-cdn.bnn.in.th/266271/Sony-PlayStation-5-Standard-(C-Chassis)-5.1-square_medium.jpg"
-    ]
-});
+const product = ref({});
 
-//for fetching data from Golang API
-
-// onMounted(async ()=>{
-//     product = await fetch(`https://fakestoreapi.com/products/${id}`).then(res => res.json());
-//     console.log(product);
-// })
+onMounted(async ()=>{
+    gameConsoleStore.gameConsole.filter((item)=>{
+        if(item.id == id){
+            product.value = item;
+        }
+    })
+})
 
 const addToCart = (product) => {
     console.log('Add to cart', product);

@@ -40,16 +40,16 @@
             <p class="text-gray-400">Check your items. And select a suitable shipping method.</p>
             <div class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6" v-for="item in carts">
                 <div class="flex flex-col rounded-lg bg-white sm:flex-row">
-                    <img class="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                        :src=item.imageUrl[0]
-                        alt="" />
+                    <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" :src=item.imageUrl[0] alt="" />
                     <div class="flex w-full flex-col px-4 py-4">
                         <span class="font-semibold">{{ item.name }}</span>
                         <span class="float-right text-gray-400">{{ item.description }}</span>
-                        <p class="text-lg font-bold">{{ item.price }}</p>
+                        <p class="text-gray-400">{{ item.price }} THB</p>
+                        <p class="text-gray-400">Qty: {{ item.quantity }}</p>
+                        <p class="text-lg font-bold">Subtotal: {{ item.price * item.quantity }}</p>
                     </div>
                 </div>
-                
+
             </div>
 
             <p class="mt-8 text-lg font-medium">Shipping Methods</p>
@@ -90,7 +90,7 @@
             <div class="">
                 <label for="email" class="mt-4 mb-2 block text-sm font-medium">Email</label>
                 <div class="relative">
-                    <input type="text" id="email" name="email"
+                    <input type="text" id="email" name="email" v-model="email"
                         class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                         placeholder="your.email@gmail.com" />
                     <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
@@ -142,7 +142,7 @@
                     <div class="relative flex-shrink-0 sm:w-7/12">
                         <input type="text" id="billing-address" name="billing-address"
                             class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                            placeholder="Street Address" />
+                            placeholder="Street Address" v-model="billingAddress" />
                         <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
                             <img class="h-4 w-4 object-contain"
                                 src="https://flagpack.xyz/_nuxt/4c829b6c0131de7162790d2f897a90fd.svg" alt="" />
@@ -150,37 +150,74 @@
                     </div>
                     <select type="text" name="billing-state"
                         class="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500">
-                        <option value="State">State</option>
+                        <select v-model="billingState">
+                            <option>State</option>
+                        </select>
                     </select>
                     <input type="text" name="billing-zip"
                         class="flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none sm:w-1/6 focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                        placeholder="ZIP" />
+                        placeholder="ZIP" v-model="billingZip" />
                 </div>
 
                 <!-- Total -->
                 <div class="mt-6 border-t border-b py-2">
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-medium text-gray-900">Subtotal</p>
-                        <p class="font-semibold text-gray-900">{{ cartStore.totalCartItems }}</p>
+                        <p class="font-semibold text-gray-900">{{ totalAmount }} THB</p>
                     </div>
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-medium text-gray-900">Shipping</p>
-                        <p class="font-semibold text-gray-900">$8.00</p>
+                        <p class="font-semibold text-gray-900">{{ shippingCost }} THB</p>
                     </div>
                 </div>
                 <div class="mt-6 flex items-center justify-between">
                     <p class="text-sm font-medium text-gray-900">Total</p>
-                    <p class="text-2xl font-semibold text-gray-900">{{ cartStore.totalCartItems  }} + $8.00</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ totalAmount + shippingCost }} THB</p>
                 </div>
             </div>
-            <button class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Place Order</button>
+            <button @click="placeOrder"
+                class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Place Order</button>
         </div>
     </div>
 </template>
 <script setup>
 import { useCartStore } from '@/store/cart';
+
 const cartStore = useCartStore();
 
+//cart
 const carts = cartStore.cart;
+const totalAmount = computed(() => {
+    return cartStore.cart.reduce((acc, item) => {
+        return acc + (item.price * item.quantity);
+    }, 0);
+})
 
+
+
+//form shipping
+const shippingCost = 50;
+const email = ref('');
+const billingAddress = ref('');
+const billingState = ref('');
+const billingZip = ref('');
+
+
+const placeOrder = () => {
+    let address = billingAddress.value + ' ' + billingState.value + ' ' + billingZip.value;
+    const orders = carts.map(item => {
+        return {
+            ProductId: item.id,
+            Quantity: item.quantity,
+            CustomerId: 'YourCustomerId',
+            OrderDate: new Date().toISOString(),
+            // Subtotal: totalAmount,
+            ShippingAddress: address,
+            Type: item.type,
+            Subtotal: item.price * item.quantity
+
+        };
+    });
+    console.log(orders);
+}
 </script>
