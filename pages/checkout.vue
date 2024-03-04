@@ -218,6 +218,7 @@ const placeOrder = () => {
 
         };
     });
-    console.log(orders);
+    // console.log(orders);
+    
 }
 </script>
