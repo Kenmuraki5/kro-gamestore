@@ -66,11 +66,9 @@ const password = ref('');
 
 const handleLogin = async () => {
   try {
-    auth.login(email.value, password.value);
-    await navigateTo({ path: '/' })
-    
+    auth.login(email.value, password.value);    
   } catch (error) {
-    console.error('Login failed:', error);
+    console.error('Login failed:', error.message);
   }
 };
 definePageMeta({

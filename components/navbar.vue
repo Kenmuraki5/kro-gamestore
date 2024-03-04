@@ -174,7 +174,7 @@ const updateCartMenu = (value: any) => {
 onMounted(() => {
     gameConsoleStore.fetchGameConsole();
     gameStore.fetchGame();
-
+    authStore.fetchUser();
 })
 
 

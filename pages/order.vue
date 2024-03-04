@@ -91,8 +91,8 @@ const groupedData = ref(orderData.reduce((acc, order) => {
     }
 
     //คำนวณราคารวมของแต่ละ order
-    const totalPrice = order.quantity * order.subtotal;
-    acc[key].total += totalPrice; // Add the current order's total to the overall total
+    // const totalPrice = order.quantity * order.subtotal;
+    acc[key].total += order.subtotal; // Add the current order's total to the overall total
 
     // เพิ่ม order detail ลงไปใน array
     acc[key].detail.push({
@@ -113,7 +113,7 @@ const resultArray = Object.values(groupedData.value);
 
 function findGameName(productId) {
     if (allGame && Array.isArray(allGame)) {
-        const game = allGame.find(game => game.id+"" === productId);
+        const game = allGame.find(game => game.Id+"" === productId);
         return game ? game.name : 'Unknown Game';
     } else {
         return 'Game data not loaded';
@@ -122,7 +122,7 @@ function findGameName(productId) {
 
 function findConsoleName(productId) {
     if (allConsole && Array.isArray(allConsole)) {
-        const consoleItem = allConsole.find(console => console.id+"" === productId);
+        const consoleItem = allConsole.find(console => console.Id+"" === productId);
         return consoleItem ? consoleItem.name : 'Unknown Console';
     } else {
         return 'Console data not loaded';

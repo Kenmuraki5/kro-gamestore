@@ -17,14 +17,6 @@ interface Address {
   postalcode: string;
 }
 
-interface User {
-  email: string;
-  password: string;
-  fullName: string;
-  phoneNumber: string;
-  address: Address;
-  imageProfile: string[];
-}
 
 export const useAuth = defineStore('auth', {
   state: () => ({
@@ -38,25 +30,28 @@ export const useAuth = defineStore('auth', {
 
   actions: {
     async login(email: string, password: string) {
-      const { $api } = useNuxtApp()
-      const token:string = await $api("customers/authentication", {
-        method: 'POST',
-        body: {
-          email: email,
-          password: password,
-        },
-      });
-      this.token = token;
-      this.fetchUser();
+      try {
+        const { $api } = useNuxtApp()
+        const token:string = await $api("users/authentication", {
+          method: 'POST',
+          body: {
+            email: email,
+            password: password,
+          },
+        });
+        this.token = token;
+        this.fetchUser()
+        await navigateTo({ path: '/' })
+      } catch (error) {
+        console.log(error)
+      }
     },
+    
     async register(form: Form, address: Address) {
       try {
         const { $api } = useNuxtApp()
-        this.token = await $api("customers/addCustomer", {
+        this.token = await $api("users/addCustomer", {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: {
             ...form, 
             address: {
@@ -71,6 +66,7 @@ export const useAuth = defineStore('auth', {
         this.fetchUser();
       } catch (error) {
         console.error('Registration failed:', error);
+        return error
       }
     },
     async logout() {
@@ -80,7 +76,7 @@ export const useAuth = defineStore('auth', {
     async fetchUser() {
       try {
         const { $api } = useNuxtApp()
-        this.user = await $api("customers", {
+        this.user = await $api("users", {
           method: 'GET',
         });
       } catch (error) {
