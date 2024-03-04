@@ -1,14 +1,12 @@
 
 <template>
   <div>
-    <h1 style="text-align: center; " class="hot-deals-title">Top 10 Console Hot deals</h1>
+    <h1 class="hot-deals-title text-center md:text-left">Top 10 Console Hot deals</h1>
 
-    <div class="grid grid-cols-5 m-5 gap-4 ">
-      <div v-for="(game, index) in games" :key="index"
-        class="grid grid-rows-2 hover:-translate-y-6 duration-300 ease-in-out">
-        <img class="w-32 xl:w-64 rounded game-img justify-items-center justify-self-center" :src="game.src"
-          v-if="game.src != ''">
-        <h1 class="game-name" v-if="game.src != ''">{{ game.name }}</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 m-5 gap-4">
+      <div v-for="(game, index) in games" :key="index" class="hover:-translate-y-6 duration-300 ease-in-out">
+        <img class="w-full h-auto rounded game-img" :src="game.src" v-if="game.src !== ''" alt="Game Image">
+        <h1 class="game-name" v-if="game.src !== ''">{{ game.name }}</h1>
       </div>
     </div>
   </div>

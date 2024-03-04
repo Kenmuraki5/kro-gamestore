@@ -4,7 +4,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
-                    <Slide v-for="slide in product.imageUrl" :key="slide">
+                    <Slide v-for="slide in product.image" :key="slide">
                         <div class="xl:h-full sm:h-auto h-full">
                             <img :src="slide" class="w-full object-cover" />
                         </div>
@@ -40,7 +40,7 @@ const product = ref({});
 
 onMounted(async ()=>{
     gameConsoleStore.gameConsole.filter((item)=>{
-        if(item.id == id){
+        if(item.Id == id){
             product.value = item;
         }
     })

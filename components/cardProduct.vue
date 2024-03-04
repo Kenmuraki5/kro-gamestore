@@ -1,6 +1,6 @@
 <template>
-  <img :src="product.imageUrl[0]" alt="Product Image" class="w-full h-64 object-contain rounded-md mb-4">
-  <nuxt-link :to="`${$route.fullPath}/${product.id}`"
+  <img :src="product.image[0]" alt="Product Image" class="w-full h-64 object-contain rounded-md mb-4">
+  <nuxt-link :to="`${$route.fullPath}/${product.Id}`"
     class="text-xl font-bold hover:text-[#71BDC1] mb-2 hover:underline decoration-[#71BDC1]">{{ product.name
     }}</nuxt-link>
   <p class="text-gray-700 mb-2">{{ splitDesLength(product.description) }}</p>
@@ -12,7 +12,7 @@
   </button>
 </template>
   
-<script setup>
+<script setup lang="ts">
 import { useCartStore } from '@/store/cart';
 const cartStore = useCartStore();
 
@@ -46,12 +46,12 @@ const props = defineProps({
 });
 
 
-const addToCart = (product) => {
+const addToCart = (product: any) => {
   cartStore.add(product);
   console.log(cartStore.cart);
 };
 
-const splitDesLength = (des) => {
+const splitDesLength = (des: string) => {
   return des.length > 100 ? des.substring(0, 100) + '...' : des;
 };
 </script>

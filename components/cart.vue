@@ -33,11 +33,11 @@
                                         <div class="mt-8">
                                             <div class="flow-root">
                                                 <ul role="list" class="-my-6 divide-y divide-gray-200">
-                                                    <li v-for="(product, index) in itemsCart" :key="product.id"
+                                                    <li v-for="(product, index) in itemsCart" :key="product.Id"
                                                         class="flex py-6">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                            <img :src="product.imageUrl[0]" :alt="product.imageAlt"
+                                                            <img :src="product.image[0]"
                                                                 class="h-full w-full object-cover object-center" />
                                                         </div>
 
@@ -54,12 +54,12 @@
                                                                 </p>
                                                             </div>
                                                             <div class="flex flex-1 items-end justify-between text-sm">
-                                                                <button type="button" @click="decreaseQuantity(product.id)">-</button>
+                                                                <button type="button" @click="decreaseQuantity(product.Id)">-</button>
                                                                 <p class="text-gray-500">Qty {{ product.quantity }}</p>
-                                                                <button type="button" @click="increaseQuantity(product.id)">+</button>
+                                                                <button type="button" @click="increaseQuantity(product.Id)">+</button>
 
                                                                 <div class="flex">
-                                                                    <button type="button" @click="deleteItemCart(product.id)"
+                                                                    <button type="button" @click="deleteItemCart(product.Id)"
                                                                         class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
                                                                 </div>
                                                             </div>

@@ -51,58 +51,60 @@
                     </div>
 
                     <!-- Cart -->
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <div
+                        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         <div class="relative ml-3">
                             <button type="button" @click="cartMenu = cartMenu == false ? true : false"
                                 class="relative rounded-full bg-white focus:bg-gray-800 focus:text-white p-1 text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <span class="absolute -inset-1.5"></span>
                                 <span class="sr-only">View Cart</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" class="w-6 h-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                 </svg>
 
                             </button>
-                            <cart :cartMenu="cartMenu" 
-                                @update:cartMenu="updateCartMenu" 
-                                :itemsCart="itemsCart" 
-                                :totalCost="totalCost"
-                                :deleteItemCart="delItemFromCart"
-                                :increaseQuantity="increaseQuantity"
-                                :decreaseQuantity="decreaseQuantity"
-                            >
+                            <cart :cartMenu="cartMenu" @update:cartMenu="updateCartMenu" :itemsCart="itemsCart"
+                                :totalCost="totalCost" :deleteItemCart="delItemFromCart"
+                                :increaseQuantity="increaseQuantity" :decreaseQuantity="decreaseQuantity">
                             </cart>
 
                         </div>
 
                         <!-- Profile dropdown -->
                         <div class="relative ml-3">
-                            <div>
-                                <button type="button" @click="profileMenu = profileMenu == false ? true : false"
-                                    class="relative rounded-full bg-white focus:bg-gray-800 focus:text-white p-1 text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                    <span class="absolute -inset-1.5"></span>
-                                    <span class="sr-only">Open user menu</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                    </svg>
+                            <div v-show="authStore.isAuthenticated">
+                                <div>
+                                    <button type="button" @click="profileMenu = profileMenu == false ? true : false"
+                                        class="relative rounded-full bg-white focus:bg-gray-800 focus:text-white p-1 text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                        id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                        <span class="absolute -inset-1.5"></span>
+                                        <span class="sr-only">Open user menu</span>
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div v-if="profileMenu"
+                                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                                    tabindex="-1">
 
-                                </button>
+                                    <nuxt-link to="/profile"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 " role="menuitem"
+                                        tabindex="-1" id="user-menu-item-0">Your Profile</nuxt-link>
+                                    <button @click="authStore.logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 w-full text-left"
+                                        role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
+                                </div>
                             </div>
-                            <div v-if="profileMenu"
-                                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                <!-- Active: "bg-gray-100", Not Active: "" -->
-
-                                <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 "
-                                    role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                    id="user-menu-item-1">Settings</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                    id="user-menu-item-2">Sign out</a>
+                            <div v-show="!authStore.isAuthenticated">
+                                <nuxt-link to="/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 "
+                                    role="menuitem" tabindex="-1" id="user-menu-item-0">SingIn</nuxt-link>
                             </div>
                         </div>
                     </div>
@@ -115,29 +117,24 @@
             <!-- Mobile menu, show/hide based on menu state. -->
             <div class="sm:hidden" id="mobile-menu" v-if="mobileMenu">
                 <div class="space-y-1 px-2 pb-3 pt-2">
-                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-                        aria-current="page">Dashboard</a>
-                    <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
-                    <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-                    <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
+                    <nuxt-link to="/Featured" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 "role="menuitem" tabindex="-1" id="user-menu-item-0">Featured</nuxt-link>
+                    <nuxt-link to="/CD-game" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 "role="menuitem" tabindex="-1" id="user-menu-item-0">CD Game</nuxt-link>
+                    <nuxt-link to="/game-console" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-700 "role="menuitem" tabindex="-1" id="user-menu-item-0">Game Console</nuxt-link>
                 </div>
             </div>
         </nav>
     </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCartStore } from '@/store/cart';
 import { useGameConsoleStore } from '@/store/console';
 import { useGameStore } from '@/store/game';
+import { useAuth } from '@/store/user';
 const cartStore = useCartStore();
 const gameConsoleStore = useGameConsoleStore();
 const gameStore = useGameStore();
-
+const authStore = useAuth();
 const profileMenu = ref(false);
 const mobileMenu = ref(false);
 const cartMenu = ref(false);
@@ -154,22 +151,21 @@ const totalCost = computed(() => {
 //     return name
 // }
 
-
 //cart function
-const increaseQuantity = (id) => {
+const increaseQuantity = (id: string) => {
     cartStore.increaseQuantity(id);
 }
-const decreaseQuantity = (id) => {
+const decreaseQuantity = (id: string) => {
     cartStore.decreaseQuantity(id);
 }
-const delItemFromCart = (id) => {
+const delItemFromCart = (id: string) => {
     cartStore.remove(id);
 
 }
 
 
 
-const updateCartMenu = (value) => {
+const updateCartMenu = (value: any) => {
     cartMenu.value = value; // Update the prop in the parent
 };
 

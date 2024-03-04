@@ -6,8 +6,8 @@ export const useCartStore = defineStore("cart", {
   }),
   actions: {
     add(item) {
-     if(this.cart.find((i) => i.id === item.id)){
-        const index = this.cart.findIndex((i) => i.id === item.id);
+     if(this.cart.find((i) => i.Id == item.Id)){
+        const index = this.cart.findIndex((i) => i.Id === item.Id);
         this.cart[index].quantity += 1;
         return;
      }
@@ -15,14 +15,14 @@ export const useCartStore = defineStore("cart", {
       this.cart.push({...item, quantity: 1});
     },
     remove(id) {
-      const index = this.cart.findIndex((i) => i.id === id);
+      const index = this.cart.findIndex((i) => i.Id === id);
       this.cart.splice(index, 1);
     },
     edit(index, item) {
       this.cart[index] = item;
     },
     decreaseQuantity(id) {
-      const index = this.cart.findIndex((i) => i.id === id);
+      const index = this.cart.findIndex((i) => i.Id === id);
       if (this.cart[index].quantity > 1) {
         this.cart[index].quantity -= 1;
       }
@@ -31,7 +31,7 @@ export const useCartStore = defineStore("cart", {
       }
     },
     increaseQuantity(id) {
-      const index = this.cart.findIndex((i) => i.id === id);
+      const index = this.cart.findIndex((i) => i.Id === id);
       this.cart[index].quantity += 1;
     }
   

@@ -64,9 +64,11 @@ const auth = useAuth()
 const email = ref('');
 const password = ref('');
 
-const handleLogin = () => {
+const handleLogin = async () => {
   try {
     auth.login(email.value, password.value);
+    await navigateTo({ path: '/' })
+    
   } catch (error) {
     console.error('Login failed:', error);
   }
