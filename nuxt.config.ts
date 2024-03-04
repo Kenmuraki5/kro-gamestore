@@ -7,9 +7,10 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt'
-    
-
-    
-
-  ]
+  ],
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL || 'http://localhost:8080/',
+    },
+  }
 })

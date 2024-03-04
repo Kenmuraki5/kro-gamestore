@@ -31,12 +31,6 @@
             <div class="profile-sections bg-gray-100 mt-8">
                 <div class="section basic-information bg-white shadow-md rounded-md p-4">
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Account Information</h3>
-                    <!-- <ul class="list-disc">
-                        <li class="text-gray-600"> <span class="font-bold">Full Name:</span> <span>{{ user.fullName
-                        }}</span> </li>
-                        <li class="text-gray-600"> <span class="font-bold">Email Address:</span> <span>{{ user.emailAddress
-                        }}</span> </li>
-                    </ul> -->
                     <div class="profile-form mt-8"> <label for="name">Name:</label> <input type="text" id="name"
                             v-model="user.name"
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
@@ -49,27 +43,18 @@
                         <label for="password" class="block mb-2">Password:</label> <input type="password" id="password"
                             v-model="user.password"
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
-                        <label for="confirmPassword" class="block mb-2">Confirm Password: </label> <input type="password"
-                            id="confirmPassword" v-model="user.confirmPassword"
+                        <label for="confirmPassword" class="block mb-2">Confirm Password: </label> <input
+                            type="password" id="confirmPassword" v-model="user.confirmPassword"
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
+
+                        <!-- validate_password -->
                         <!-- <p v-if="user.confirmPassword == user.password && (user.password != '' )" class="text-green-600">Passwords match!</p>
                         <p v-else-if="user.confirmPassword !== user.password" class="text-red-600">Passwords do not match!</p> -->
-
-
                         <!-- <p v-if="passwordsMatch" class="text-green-600">Passwords match!</p>
                         <p v-else-if="user.confirmPassword !== '' || !passwordsMatch" class="text-red-600">Passwords do not match!</p> -->
 
                     </div>
                 </div>
-                <!-- <div class="section system-settings mt-8 bg-white shadow-md rounded-md p-4">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">System Settings</h3>
-                    <ul class="list-disc">
-                        <li class="text-gray-600"> <span class="font-bold">Language:</span> <span>{{ user.language }}</span>
-                        </li>
-                        <li class="text-gray-600"> <span class="font-bold">Privacy Settings:</span> <span>{{
-                            user.privacySettings }}</span> </li>
-                    </ul>
-                </div> -->
 
                 <div class=" address-form section system-settings mt-8 bg-white shadow-md rounded-md p-4">
                     <h1 class="text-xl font-bold text-gray-800 mb-4"> Address Information</h1>
@@ -80,34 +65,32 @@
 
 
                     <label for="province" class="block mb-2">Province:</label>
-                    <!-- <input type="text" id="province" v-model="user.province"
-                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
-                        placeholder="กรอกจังหวัดของคุณ" /> -->
                     <select id="province" v-model="user.province"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4">
-                        <option v-for="province in provinces" :key="province.id" :value="province.name_en">{{ province.name_en }}
+                        <option v-for="province in provinces" :key="province.id" :value="province.id">{{
+                    province.name_th
+
+                }}
                         </option>
                     </select>
 
                     <label for="district" class="block mb-2">District:</label>
-                    <!-- <input type="text" id="district" v-model="user.district"
-                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
-                        placeholder="กรอกอำเภอของคุณ" /> -->
                     <select id="district" v-model="user.district"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4">
-                        <option v-for="district in districts" :key="district.id" :value="district.name_en">{{ district.name_en }}
-                        </option>
+                        <option v-for="district in districts.filter(district => district.province_id == user.province)"
+                            :key="district.id" :value="district.id">{{ user.district + district.name_th }}</option>
                     </select>
 
                     <label for="subdistrict" class="block mb-2">Subdistrict:</label>
-                    <!-- <input type="text" id="subdistrict" v-model="user.subdistrict"
-                        class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
-                        placeholder="กรอกตำบลของคุณ" /> -->
                     <select id="subdistrict" v-model="user.subdistrict"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4">
-                        <option v-for="subdistrict in subdistricts" :key="subdistrict.id" :value="subdistrict.name_en">{{
-                            subdistrict.name_en }}</option>
+                        <option
+                            v-for="subdistrict in subdistricts.filter(subdistrict => subdistrict.amphure_id === user.subdistrict)"
+                            :key="subdistrict.id" :value="subdistrict.id">{{ subdistrict.name_th }}</option>
                     </select>
+
+
+
                     <label for="postal-code" class="block mb-2">รหัสไปรษณีย์:</label>
                     <input type="number" id="postal-code" v-model="user.postalCode"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
@@ -120,61 +103,25 @@
         </div>
     </div>
 </template>
-  
+
 <script setup>
-// const provinces = ref([]);
-// const districts = ref([]);
-// const subdistricts = ref([]);
 
-var subdistricts = require("../../assets/static/thai_amphures.json");
-var districts = require("../../assets/static/thai_amphures.json");
+// const filteredDistricts = computed(() => {
+//     if (!user.province) return []; // Return empty array if no province is selected
+//     console.log("fil", districts);
+//     return districts.filter(district => district.province_id === user.province.id);
+
+// });
+
+
+
 var provinces = require("../../assets/static/thai_provinces.json");
-// provinces = thai_tambons
-// console.log(thai_amphures);
-// async function fetchData() {
-//     try {
-//         const responseProvinces = await fetch('../../assets/static/thai_provinces.json');
-//         // const responseProvinces = await fetch( "https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province.json");
+var districts = require("../../assets/static/thai_amphures.json");
+var subdistricts = require("../../assets/static/thai_tambons.json");
 
-//         const responseDistricts = await fetch('/assets/static/thai_amphures.json');
-//         const responseSubdistricts = await fetch('/assets/static/thai_tambons.json');
 
-//         if (!responseProvinces.ok || !responseDistricts.ok || !responseSubdistricts.ok) {
-//             throw new Error('Failed to fetch data');
-//         }
-
-//         provinces.value = await responseProvinces.json();
-//         districts.value = await responseDistricts.json();
-//         subdistricts.value = await responseSubdistricts.json();
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
-
-// fetchData();
-// import {amphures} from "./amphures";
-// import {provinces} from "./provinces";
-// import {tambons} from "./tambons";
-
-// // amphures
-// console.log(amphures);
-
-// const amphures = ref({})
-// const tambons = require("../../content/thai_tambons.json")
-// const amphures = require("../../content/thai_tambons.json")
-// const provinces = require("../../content/thai_provinces.json")
-
-// async fetch() {
-
-//     await const amphures = await fetch("../../content/thai_amphures.json");
-//     await const tambons = await fetch("../../content/thai_tambons.json");
-
-//     this.provinces = await response.json();
-//   }
-// onMounted(async)
-
-var user = {
-    name: "Owen", // Replace with actual user data
+var user = ref({
+    name: "Owen",
     username: "OwenUsername",
     avatar: "https://scontent.fbkk5-3.fna.fbcdn.net/v/t39.30808-6/375574779_2749709631851419_6840915737247955428_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=efb6e6&_nc_eui2=AeFgyDDu_QBE4-6P2cEqHLHjFvee6mK9nfIW957qYr2d8h8zE0Dm0pQ14U7-Qp_IUD8mPCEatstsOMC-8uXQGN3d&_nc_ohc=w2s26ESuIuMAX-0QIFP&_nc_ht=scontent.fbkk5-3.fna&oh=00_AfB4I54xTSw5EP1B6Gsc7kOcY055qEBdE5Amb6abb3gHiw&oe=65D5FB98", // Replace with image URL
     fullName: "",
@@ -184,24 +131,18 @@ var user = {
     password: "",
     confirmPassword: "",
     address: "",
-    province: "",
-    district: "",
-    subdistrict: "",
+    province: {},
+    district: {},
+    subdistrict: {},
     postalCode: "",
 
-}
+})
+console.log(districts.filter(district => district.province_id == 1))
 
 </script>
+
 <script>
 
-// const passwordsMatch = computed(() => {
-//     return user.password === user.confirmPassword;
-// });
-
-// const checkPasswords = () => {
-//     // Trigger the computed property to recompute
-//     passwordsMatch.value;
-// };
 function uploadAvatar(event) {
     const file = event.target.files[0];
     // Example: Upload the file to a server and update user.avatar with the returned URL
@@ -209,13 +150,12 @@ function uploadAvatar(event) {
     this.user.avatar = URL.createObjectURL(file);
 };
 function editProfile() {
-    // Handle profile edit here
+
 }
 
 </script>
-  
+
 <style>
-/* Add styles for the profile page components here */
 .profile-page {
     /* Background color, padding, margin, etc. */
 }
@@ -267,5 +207,4 @@ function editProfile() {
     /* transform: scale(); */
 
 }
-
-/* Add styles for other elements like labels, values, buttons, etc. */</style>
+</style>
