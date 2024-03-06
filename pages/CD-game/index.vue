@@ -42,33 +42,6 @@
                                         </div>
                                     </ul>
 
-                                    <!-- <Disclosure as="div" v-for="section in filters" :key="section.id"
-                                        class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
-                                        <h3 class="-mx-2 -my-3 flow-root">
-                                            <DisclosureButton
-                                                class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                                <span class="font-medium text-gray-900">{{ section.name }}</span>
-                                                <span class="ml-6 flex items-center">
-                                                    <PlusIcon v-if="!open" class="h-5 w-5" aria-hidden="true" />
-                                                    <MinusIcon v-else class="h-5 w-5" aria-hidden="true" />
-                                                </span>
-                                            </DisclosureButton>
-                                        </h3>
-                                        <DisclosurePanel class="pt-6">
-                                            <div class="space-y-6">
-                                                <div v-for="(option, optionIdx) in section.options" :key="option.value"
-                                                    class="flex items-center">
-                                                    <input :id="`filter-mobile-${section.id}-${optionIdx}`"
-                                                        :name="`${section.id}[]`" :value="option.value" type="checkbox"
-                                                        :checked="option.checked"
-                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                    <label :for="`filter-mobile-${section.id}-${optionIdx}`"
-                                                        class="ml-3 min-w-0 flex-1 text-gray-500">{{ option.label
-                                                        }}</label>
-                                                </div>
-                                            </div>
-                                        </DisclosurePanel>
-                                    </Disclosure> -->
                                 </div>
                             </DialogPanel>
                         </TransitionChild>
@@ -102,7 +75,7 @@
                                     class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <div class="py-1">
                                         <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }">
-                                        <a :href="option.href"
+                                        <a @click="selectedSortOption = option"
                                             :class="[option.current ? 'font-medium text-gray-900' : 'text-gray-500', active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']">{{
                 option.name }}</a>
                                         </MenuItem>
@@ -110,6 +83,8 @@
                                 </MenuItems>
                             </transition>
                         </Menu>
+
+
 
                         <button type="button" class="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                             <span class="sr-only">View grid</span>
@@ -132,11 +107,12 @@
                             <h3 class="sr-only">Categories</h3>
                             <ul role="list"
                                 class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                                <div v-for="product, index in subCategories" class="flex items-center">
-                                    <input id="radio-group-1" name="category" :value="product.name" type="radio"
-                                        v-model="selectedSerie"
+                                <div v-for="product, index in brand" :key="product.id" class="flex items-center">
+                                    <input id="radio-group-{{ index }}" name="category" :value="product.name"
+                                        type="radio" v-model="selectedBrand"
                                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                    <label class="ml-3 text-sm text-gray-600">{{ product.name }}</label>
+                                    <label :for="`filter-${product.id}`" class="ml-3 text-sm text-gray-600">{{
+                product.name }}</label>
                                 </div>
                             </ul>
 
@@ -155,8 +131,8 @@
                                     <div class="space-y-4">
                                         <div v-for="(option, optionIdx) in price.options" :key="option.value"
                                             class="flex items-center">
-                                            <input :name="'priceOptions'"
-                                                :value="option.value" type="checkbox" v-model="selectedPriceOptions"
+                                            <input :name="'priceOptions'" :value="option.value" type="checkbox"
+                                                v-model="selectedPriceOptions"
                                                 class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                                             <label :for="`filter-${option.id}-${optionIdx}`"
                                                 class="ml-3 text-sm text-gray-600">{{ option.label }}</label>
@@ -179,8 +155,8 @@
                                     <div class="space-y-4">
                                         <div v-for="(option, optionIdx) in genre.options" :key="option.value"
                                             class="flex items-center">
-                                            <input :name="'priceOptions'"
-                                                :value="option.value" type="checkbox" v-model="selecteGenreOptions"
+                                            <input :name="'priceOptions'" :value="option.value" type="checkbox"
+                                                v-model="selectedGenreOptions"
                                                 class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                                             <label :for="`filter-${option.id}-${optionIdx}`"
                                                 class="ml-3 text-sm text-gray-600">{{ option.label }}</label>
@@ -194,7 +170,7 @@
                         <div class="lg:col-span-3">
                             <!-- Your content -->
                             <div class="container mx-auto">
-                                <GridGame></GridGame>
+                                <GridGame :games="filteredGames"></GridGame>
                             </div>
                         </div>
                     </div>
@@ -205,7 +181,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import {
     Dialog,
     DialogPanel,
@@ -221,15 +197,19 @@ import {
 } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/vue/20/solid'
+import { useGameStore } from '~/store/game'
+
+const gameStore = useGameStore()
 
 const sortOptions = [
-    { name: 'Most Popular', current: true },
-    { name: 'Best Rating', current: false },
-    { name: 'Newest', current: false },
-    { name: 'Price: Low to High', current: false },
-    { name: 'Price: High to Low', current: false },
+    { name: 'Most Popular', current: false, key: 'popularity' },
+    { name: 'Best Rating', current: false, key: 'rating' },
+    { name: 'Newest', current: false, key: 'date' },
+    { name: 'Price: Low to High', current: false, key: 'priceLow' },
+    { name: 'Price: High to Low', current: false, key: 'priceHigh' },
 ]
-const subCategories = [
+
+const brand = [
     { name: 'All Game' },
     { name: 'Microsoft' },
     { name: 'Sony' },
@@ -240,34 +220,72 @@ const subCategories = [
     { name: 'Konami' },
     { name: 'Capcom' }
 ]
+
 const price = {
     id: 'price',
     name: 'Price',
     options: [
-        { value: 'less than 100 ฿', label: 'less than 100 ฿', checked: false },
-        { value: '100 - 300 ฿', label: '100 - 300 ฿', checked: false },
-        { value: '300 - 500 ฿', label: '300 - 500 ฿', checked: false },
-        { value: '500 - 700 ฿', label: '500 - 700 ฿', checked: false },
-        { value: '700 - 1000 ฿', label: '700 - 1000 ฿', checked: false },
-        { value: 'more than 1000 ฿', label: 'more than 1000 ฿', checked: true },
+        { value: '0 99', label: 'less than 100 ฿', checked: false },
+        { value: '100 300', label: '100 - 300 ฿', checked: false },
+        { value: '300 500', label: '300 - 500 ฿', checked: false },
+        { value: '500 700', label: '500 - 700 ฿', checked: false },
+        { value: '700 1000', label: '700 - 1000 ฿', checked: false },
+        { value: '1001 1000000', label: 'more than 1000 ฿', checked: false },
     ],
 }
+
 const genre = {
-    id: 'price',
-    name: 'Price',
+    id: 'genre',
+    name: 'genre',
     options: [
-        { value: 'less than 100 ฿', label: 'Action', checked: false },
-        { value: '100 - 300 ฿', label: 'Sport', checked: false },
-        { value: '300 - 500 ฿', label: 'Shooter Game', checked: false },
-        { value: '500 - 700 ฿', label: 'Survival games', checked: false },
+        { value: 'Action', label: 'Action', checked: false },
+        { value: 'Sport', label: 'Sport', checked: false },
+        { value: 'Shooter Game', label: 'Shooter Game', checked: false },
+        { value: 'Survival games', label: 'Survival games', checked: false },
         { value: 'Puzzle', label: 'Puzzle', checked: false },
         { value: 'Anime', label: 'Anime', checked: false },
         { value: 'Rhythm games', label: 'Rhythm games', checked: false },
-        { value: 'Battle Royale games', label: 'Battle Royale games', checked: true },
+        { value: 'Battle Royale games', label: 'Battle Royale games', checked: false },
     ],
 }
-const selectedSerie = ref("All Game")
+const selectedSortOption = ref(sortOptions[0]); 
+
+const selectedBrand = ref("All Game")
 const selectedPriceOptions = ref([])
-const selecteGenreOptions = ref([])
+const selectedGenreOptions = ref([])
+
+const filteredGames = computed(() => {
+    let filtered = gameStore.games.filter(game => {
+        const categoryMatch = selectedBrand.value === "All Game" || game.brand === selectedBrand.value;
+
+        const priceMatch = selectedPriceOptions.value.length === 0 || selectedPriceOptions.value.some(option => {
+            const [min, max] = option.split(' ');
+            const gamePrice = parseFloat(game.price);
+            return gamePrice >= parseFloat(min) && gamePrice <= parseFloat(max);
+        });
+
+        const genreMatch = selectedGenreOptions.value.length === 0 || selectedGenreOptions.value.some(option => {
+            return game.genre.includes(option);
+        });
+
+        return categoryMatch && priceMatch && genreMatch;
+    });
+
+    // Sorting the filtered games based on the selected sort option
+    if (selectedSortOption.value.key === 'popularity') {
+        filtered.sort((a, b) => b.popularity - a.popularity);
+    } else if (selectedSortOption.value.key === 'rating') {
+        filtered.sort((a, b) => b.rating - a.rating);
+    } else if (selectedSortOption.value.key === 'date') {
+        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (selectedSortOption.value.key === 'priceLow') {
+        filtered.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    } else if (selectedSortOption.value.key === 'priceHigh') {
+        filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    }
+
+    return filtered;
+})
+
 const mobileFiltersOpen = ref(false)
 </script>

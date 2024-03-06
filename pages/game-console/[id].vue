@@ -1,6 +1,8 @@
 <template>
     <div class="container mx-auto mt-4">
-        <nuxt-link to="/game-console" class="text-black hover:underline decoration-[#71BDC1] hover:text-[#71BDC1]  m-10">Back to Products</nuxt-link>
+        <nuxt-link to="/game-console"
+            class="text-black hover:underline decoration-[#71BDC1] hover:text-[#71BDC1]  m-10">Back to
+            Products</nuxt-link>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
@@ -28,25 +30,31 @@
         </div>
     </div>
 </template>
+
 <script setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGameConsoleStore } from '~/store/console';
+import { useCartStore } from '~/store/cart';
 const route = useRoute();
 const gameConsoleStore = useGameConsoleStore();
+const cartStore = useCartStore();
 const id = route.params.id;
 
 const product = ref({});
 
-onMounted(async ()=>{
-    gameConsoleStore.gameConsole.filter((item)=>{
-        if(item.Id == id){
+
+onMounted(async ()=> {
+    await gameConsoleStore.fetchGameConsole();
+    gameConsoleStore.gameConsole.filter((item) => {
+        if (item.Id == id) {
             product.value = item;
         }
-    })
+    });
 })
 
+
 const addToCart = (product) => {
-    console.log('Add to cart', product);
+    cartStore.add(product);
 }
 </script>

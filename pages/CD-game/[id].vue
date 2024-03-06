@@ -1,10 +1,15 @@
 <template>
     <section id="fullscreen">
+        <nuxt-link to="/CD-game"
+            class="text-black hover:underline decoration-[#71BDC1] hover:text-[#71BDC1]  m-10">Back to
+            Products</nuxt-link>
         <div class="md:min-h-screen h-64 relative">
             <div class="absolute inset-0 bg-cover bg-center">
                 <div class="absolute inset-0 w-1/2 bg-gradient-to-l from-[transparent] to-black"></div>
-                <img src="https://gmedia.playstation.com/is/image/SIEPDC/the-witcher-3-hero-banner-desktop-01-en-12dec22?$3200px$"
-                    class="w-full h-full object-cover" alt="The Witcher 3: Wild Hunt" />
+                <!-- <img src="https://gmedia.playstation.com/is/image/SIEPDC/the-witcher-3-hero-banner-desktop-01-en-12dec22?$3200px$"
+                    class="w-full h-full object-cover" alt="The Witcher 3: Wild Hunt" /> -->
+                    <img :src="product.image[0]"
+                    class="w-full h-full object-cover" :alt="product.image[0]" />
             </div>
 
             <div id="content-in-fullscreen" class="hidden md:block absolute inset-y-0 md:m-12 text-white">
@@ -17,8 +22,9 @@
                 <div class="mt-5">Available on PS4 PS5</div>
                 <div class="w-64 mt-10">
                     <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
-                        <Slide v-for="slide in product.imageUrl" :key="slide">
+                        <Slide v-for="slide in product.image" :key="slide">
                             <div class="rounded-xl carousel__item">
+                                
                                 <img :src="slide" class="w-full h-72 object-contain" />
                             </div>
                         </Slide>
@@ -65,25 +71,28 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-
+import { useGameStore } from '~/store/game';
 const route = useRoute();
+const gameStore = useGameStore();
 const id = route.params.id;
+const cartStore = useCartStore();
 
 const product = ref({
-    id: 1,
-    name: "The Witcher 3: Wild Hunt ",
-    provider: "Bandai Namco Entertainment",
-    description: "คุณคือเกรัลท์แห่งริเวีย นักล่าสัตว์ประหลาดรับจ้าง ที่ที่คุณยืนอยู่คือทวีปที่แตกแยกด้วยสงครามและเต็มไปด้วยมอนสเตอร์ที่คุณสามารถสำรวจได้ตามใจคุณ ผู้ติดต่อคนปัจจุบันของคุณน่ะหรือ ตามหาสิรี เด็กในคำทำนาย อาวุธที่มีชีวิตที่เปลี่ยนรูปร่างของโลกได้",
-    price: 499.99,
-    imageUrl: [
-        "https://down-th.img.susercontent.com/file/th-11134207-7r990-lmdiywyaenwu55",
-        "https://images.g2a.com/360x600/1x1x1/the-witcher-3-wild-hunt-goty-edition-pc-steam-account-account-global-i10000026141053/6026806b7e696c7fb045f672"
-    ]
+    image: ["https://placehold.it/800x400", "https://placehold.it/800x400", "https://placehold.it/800x400"],
 });
+onMounted(async ()=> {
+    const games = await gameStore.fetchGame();
+    games.forEach((item) => {
+        if (item.Id == id) {
+            product.value = item;
+        }
+    });
+})
+
 
 const addToCart = (product) => {
-    console.log('Add to cart', product);
-}
+    cartStore.add(product);
+s};
 </script>
 <style>
 .carousel__item {
