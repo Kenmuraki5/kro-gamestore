@@ -5,8 +5,9 @@
             <TransitionRoot as="template" :show="mobileFiltersOpen">
                 <Dialog as="div" class="relative z-40 lg:hidden" @close="mobileFiltersOpen = false">
                     <TransitionChild as="template" enter="transition-opacity ease-linear duration-300"
-                        enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300"
-                        leave-from="opacity-100" leave-to="opacity-0">
+                        enter-from="opacity-0" enter-to="opacity-100"
+                        leave="transition-opacity ease-linear duration-300" leave-from="opacity-100"
+                        leave-to="opacity-0">
                         <div class="fixed inset-0 bg-black bg-opacity-25" />
                     </TransitionChild>
 
@@ -28,15 +29,20 @@
                                 </div>
 
                                 <!-- Filters -->
-                                <form class="mt-4 border-t border-gray-200">
+                                <div class="mt-4 border-t border-gray-200">
                                     <h3 class="sr-only">Categories</h3>
-                                    <ul role="list" class="px-2 py-3 font-medium text-gray-900">
-                                        <li v-for="category in subCategories" :key="category.name">
-                                            <a :href="category.href" class="block px-2 py-3">{{ category.name }}</a>
-                                        </li>
+                                    <ul role="list"
+                                        class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
+                                        <div v-for="product in subCategories" :key="product.id"
+                                            class="flex items-center">
+                                            <input type="radio" :id="`filter-${product.id}`" :name="'category'"
+                                                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                            <label :for="`filter-${product.id}`" class="ml-3 text-sm text-gray-600">{{
+                product.name }}</label>
+                                        </div>
                                     </ul>
 
-                                    <Disclosure as="div" v-for="section in filters" :key="section.id"
+                                    <!-- <Disclosure as="div" v-for="section in filters" :key="section.id"
                                         class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
                                         <h3 class="-mx-2 -my-3 flow-root">
                                             <DisclosureButton
@@ -57,12 +63,13 @@
                                                         :checked="option.checked"
                                                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                                                     <label :for="`filter-mobile-${section.id}-${optionIdx}`"
-                                                        class="ml-3 min-w-0 flex-1 text-gray-500">{{ option.label }}</label>
+                                                        class="ml-3 min-w-0 flex-1 text-gray-500">{{ option.label
+                                                        }}</label>
                                                 </div>
                                             </div>
                                         </DisclosurePanel>
-                                    </Disclosure>
-                                </form>
+                                    </Disclosure> -->
+                                </div>
                             </DialogPanel>
                         </TransitionChild>
                     </div>
@@ -71,7 +78,7 @@
 
             <main class="mx-auto md:mx-20 px-4 sm:px-6 lg:px-8">
                 <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-12">
-                    <h1 class="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+                    <h1 class="text-4xl font-bold tracking-tight text-gray-900">{{ $route.name }}</h1>
 
                     <div class="flex items-center">
                         <Menu as="div" class="relative inline-block text-left">
@@ -97,7 +104,7 @@
                                         <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }">
                                         <a :href="option.href"
                                             :class="[option.current ? 'font-medium text-gray-900' : 'text-gray-500', active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']">{{
-                                                option.name }}</a>
+                option.name }}</a>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>
@@ -121,21 +128,23 @@
 
                     <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
                         <!-- Filters -->
-                        <form class="hidden lg:block">
+                        <div class="hidden lg:block">
                             <h3 class="sr-only">Categories</h3>
                             <ul role="list"
                                 class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                                <li v-for="category in subCategories" :key="category.name">
-                                    <a :href="category.href">{{ category.name }}</a>
-                                </li>
+                                <div v-for="product, index in subCategories" class="flex items-center">
+                                    <input id="radio-group-1" name="category" :value="product.name" type="radio"
+                                        v-model="selectedSerie"
+                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                    <label class="ml-3 text-sm text-gray-600">{{ product.name }}</label>
+                                </div>
                             </ul>
 
-                            <Disclosure as="div" v-for="section in filters" :key="section.id"
-                                class="border-b border-gray-200 py-6" v-slot="{ open }">
+                            <Disclosure as="div" class="border-b border-gray-200 py-6" v-slot="{ open }">
                                 <h3 class="-my-3 flow-root">
                                     <DisclosureButton
-                                        class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                                        <span class="font-medium text-gray-900">{{ section.name }}</span>
+                                        class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                        <span class="font-medium text-gray-900">Price</span>
                                         <span class="ml-6 flex items-center">
                                             <PlusIcon v-if="!open" class="h-5 w-5" aria-hidden="true" />
                                             <MinusIcon v-else class="h-5 w-5" aria-hidden="true" />
@@ -144,24 +153,48 @@
                                 </h3>
                                 <DisclosurePanel class="pt-6">
                                     <div class="space-y-4">
-                                        <div v-for="(option, optionIdx) in section.options" :key="option.value"
+                                        <div v-for="(option, optionIdx) in price.options" :key="option.value"
                                             class="flex items-center">
-                                            <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
-                                                :value="option.value" type="checkbox" :checked="option.checked"
+                                            <input :name="'priceOptions'"
+                                                :value="option.value" type="checkbox" v-model="selectedPriceOptions"
                                                 class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                            <label :for="`filter-${section.id}-${optionIdx}`"
+                                            <label :for="`filter-${option.id}-${optionIdx}`"
                                                 class="ml-3 text-sm text-gray-600">{{ option.label }}</label>
                                         </div>
                                     </div>
                                 </DisclosurePanel>
                             </Disclosure>
-                        </form>
+                            <Disclosure as="div" class="border-b border-gray-200 py-6" v-slot="{ open }">
+                                <h3 class="-my-3 flow-root">
+                                    <DisclosureButton
+                                        class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                        <span class="font-medium text-gray-900">Genre</span>
+                                        <span class="ml-6 flex items-center">
+                                            <PlusIcon v-if="!open" class="h-5 w-5" aria-hidden="true" />
+                                            <MinusIcon v-else class="h-5 w-5" aria-hidden="true" />
+                                        </span>
+                                    </DisclosureButton>
+                                </h3>
+                                <DisclosurePanel class="pt-6">
+                                    <div class="space-y-4">
+                                        <div v-for="(option, optionIdx) in genre.options" :key="option.value"
+                                            class="flex items-center">
+                                            <input :name="'priceOptions'"
+                                                :value="option.value" type="checkbox" v-model="selecteGenreOptions"
+                                                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                            <label :for="`filter-${option.id}-${optionIdx}`"
+                                                class="ml-3 text-sm text-gray-600">{{ option.label }}</label>
+                                        </div>
+                                    </div>
+                                </DisclosurePanel>
+                            </Disclosure>
+                        </div>
 
                         <!-- Product grid -->
                         <div class="lg:col-span-3">
                             <!-- Your content -->
                             <div class="container mx-auto">
-                                    <GridGame></GridGame>
+                                <GridGame></GridGame>
                             </div>
                         </div>
                     </div>
@@ -170,7 +203,7 @@
         </div>
     </div>
 </template>
-  
+
 <script setup>
 import { ref } from 'vue'
 import {
@@ -190,48 +223,51 @@ import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/vue/20/solid'
 
 const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false },
+    { name: 'Most Popular', current: true },
+    { name: 'Best Rating', current: false },
+    { name: 'Newest', current: false },
+    { name: 'Price: Low to High', current: false },
+    { name: 'Price: High to Low', current: false },
 ]
 const subCategories = [
-    
-    { name: 'Microsoft', href: '#' },
-    { name: 'Sony', href: '#' },
-    { name: 'Nintendo', href: '#' },
-    { name: 'EA', href: '#' },
-    { name: 'Nexon', href: '#' },
-    { name: 'Bandai', href: '#' },
-    { name: 'Konami', href: '#' },
-    { name: 'Capcom', href: '#' }
+    { name: 'All Game' },
+    { name: 'Microsoft' },
+    { name: 'Sony' },
+    { name: 'Nintendo' },
+    { name: 'EA' },
+    { name: 'Nexon' },
+    { name: 'Bandai' },
+    { name: 'Konami' },
+    { name: 'Capcom' }
 ]
-const filters = [
-    {
-        id: 'category',
-        name: 'Category',
-        options: [
-            { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-            { value: 'sale', label: 'Sale', checked: false },
-            { value: 'travel', label: 'Travel', checked: true },
-            { value: 'organization', label: 'Organization', checked: false },
-            { value: 'accessories', label: 'Accessories', checked: false },
-        ],
-    },
-    {
-        id: 'price',
-        name: 'Price',
-        options: [
-            { value: 'less than 100 ฿', label: 'less than 100 ฿', checked: false },
-            { value: '100 - 300 ฿', label: '100 - 300 ฿', checked: false },
-            { value: '300 - 500 ฿', label: '300 - 500 ฿', checked: false },
-            { value: '500 - 700 ฿', label: '500 - 700 ฿', checked: false },
-            { value: '700 - 1000 ฿', label: '700 - 1000 ฿', checked: false },
-            { value: 'more than 1000 ฿', label: 'more than 1000 ฿', checked: true },
-        ],
-    },
-]
-
+const price = {
+    id: 'price',
+    name: 'Price',
+    options: [
+        { value: 'less than 100 ฿', label: 'less than 100 ฿', checked: false },
+        { value: '100 - 300 ฿', label: '100 - 300 ฿', checked: false },
+        { value: '300 - 500 ฿', label: '300 - 500 ฿', checked: false },
+        { value: '500 - 700 ฿', label: '500 - 700 ฿', checked: false },
+        { value: '700 - 1000 ฿', label: '700 - 1000 ฿', checked: false },
+        { value: 'more than 1000 ฿', label: 'more than 1000 ฿', checked: true },
+    ],
+}
+const genre = {
+    id: 'price',
+    name: 'Price',
+    options: [
+        { value: 'less than 100 ฿', label: 'Action', checked: false },
+        { value: '100 - 300 ฿', label: 'Sport', checked: false },
+        { value: '300 - 500 ฿', label: 'Shooter Game', checked: false },
+        { value: '500 - 700 ฿', label: 'Survival games', checked: false },
+        { value: 'Puzzle', label: 'Puzzle', checked: false },
+        { value: 'Anime', label: 'Anime', checked: false },
+        { value: 'Rhythm games', label: 'Rhythm games', checked: false },
+        { value: 'Battle Royale games', label: 'Battle Royale games', checked: true },
+    ],
+}
+const selectedSerie = ref("All Game")
+const selectedPriceOptions = ref([])
+const selecteGenreOptions = ref([])
 const mobileFiltersOpen = ref(false)
 </script>
