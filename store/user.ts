@@ -9,6 +9,15 @@ interface Form {
   imageProfile: string;
 }
 
+interface User {
+  fullName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  imageProfile: [];
+  address: Address;
+}
+
 interface Address {
   address: string;
   province: string;
@@ -21,7 +30,7 @@ interface Address {
 export const useAuth = defineStore('auth', {
   state: () => ({
     token: "",
-    user: {},
+    user: {} as User,
   }),
 
   getters: {
@@ -32,16 +41,15 @@ export const useAuth = defineStore('auth', {
     async login(email: string, password: string) {
       try {
         const { $api } = useNuxtApp()
-        const token:string = await $api("users/authentication", {
+        this.token = await $api("users/authentication", {
           method: 'POST',
           body: {
             email: email,
             password: password,
           },
         });
-        this.token = token;
         this.fetchUser()
-        await navigateTo({ path: '/' })
+        navigateTo({ path: '/' })
       } catch (error) {
         console.log(error)
       }
@@ -78,11 +86,41 @@ export const useAuth = defineStore('auth', {
         const { $api } = useNuxtApp()
         this.user = await $api("users", {
           method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "bearer " + this.token
+          }
         });
+        return
       } catch (error) {
         console.error('Fetch user failed:', error);
       }
-    }
+    },
+  
+
+
+    async updateUser(userForm:Form) {
+      console.log('Updating user', this.user);
+      try {
+        const { $api } = useNuxtApp()
+        await $api("users/updateUser", {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "bearer " + this.token
+          },
+          body: {
+            ...userForm,
+            password: this.user.password
+
+          },
+        });
+        this.fetchUser();
+      } catch (error) {
+        console.error('Update failed:', error);
+        return error
+      }
+    },
   },
   persist: {
     storage: persistedState.localStorage,
