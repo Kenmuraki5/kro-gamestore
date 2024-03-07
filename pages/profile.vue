@@ -8,9 +8,9 @@
 
             </div>
             <div class="profile-info  ml-5">
-                <h2 class="text-3xl font-bold text-gray-800">{{ userForm.fullName }}</h2>
+                <!-- <h2 class="text-3xl font-bold text-gray-800">{{ userForm.fullName }}</h2>
                 <p class="text-gray-600 m-1">{{ userForm.username }}</p>
-                <p class="text-gray-600 m-1 decoration-2 underline decoration-sky-500">{{ userForm.email }}</p>
+                <p class="text-gray-600 m-1 decoration-2 underline decoration-sky-500">{{ userForm.email }}</p> -->
                 <h3 class="mt-3">Change picture</h3>
                 <div class="flex items-center justify-center text-gray-400 border-2 bordor-solid ">
                     <!-- <label for="fileInput"> Avatar</label> -->
@@ -20,8 +20,8 @@
                         <!-- <p>Drag and drop your profile picture here, or click to select</p> -->
                     </div>
                     <!-- <img v-if="userForm.imageProfile" :src="userForm.imageProfile" alt="Profile Image" style="max-width: 200px;"> -->
-
                 </div>
+                <button @click="updateprofilePicture()">test</button>
 
 
             </div>
@@ -144,15 +144,15 @@ const cancelEdit = () => {
 const authStore = useAuth();
 
 var userForm = ref({
-    fullName: authStore.user.fullName,
-    email: authStore.user.email,
-    phoneNumber: authStore.user.phoneNumber,
+    fullName: authStore.user.fullName || "",
+    email: authStore.user.email || "",
+    phoneNumber: authStore.user.phoneNumber || "",
     address: {
-        address: authStore.user.address.address,
-        province: authStore.user.address.province,
-        district: authStore.user.address.district,
-        subDistrict: authStore.user.address.subDistrict,
-        postalCode: authStore.user.address.postalCode
+        address: authStore.user.address?.address || "",
+        province: authStore.user.address?.province || "",
+        district: authStore.user.address?.district || "",
+        subDistrict: authStore.user.address?.subDistrict || "",
+        postalCode: authStore.user.address?.postalCode || ""
     },
     imageProfile: ["https://scontent.fbkk5-3.fna.fbcdn.net/v/t39.30808-6/375574779_2749709631851419_6840915737247955428_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=efb6e6&_nc_eui2=AeFgyDDu_QBE4-6P2cEqHLHjFvee6mK9nfIW957qYr2d8h8zE0Dm0pQ14U7-Qp_IUD8mPCEatstsOMC-8uXQGN3d&_nc_ohc=w2s26ESuIuMAX-0QIFP&_nc_ht=scontent.fbkk5-3.fna&oh=00_AfB4I54xTSw5EP1B6Gsc7kOcY055qEBdE5Amb6abb3gHiw&oe=65D5FB98"] // Replace with image URL
 
@@ -170,4 +170,54 @@ const updateUserFunc = () => {
     });
 };
 
+const profilePicture = ref({})
+const { $api } = useNuxtApp()
+const handleFileInput = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            userForm.imageProfile = reader.result;
+        };
+        reader.readAsDataURL(file);
+        profilePicture.value = file
+    }
+};
+const updateprofilePicture = async () => {
+    const formData = new FormData();
+    formData.append("profilePicture", profilePicture.value);
+    console.log(profilePicture.value)
+
+    try {
+        console.log(formData)
+        const response = await $api('users/test', {
+            body: formData,
+            method: "POST",
+            headers: {
+            "Authorization": "bearer " + authStore.token,
+            'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        console.log(response.data);
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your profile picture has been updated",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    } catch (error) {
+        console.error(error);
+        // Handle the error
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Failed to update profile picture",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    }
+};
 </script>

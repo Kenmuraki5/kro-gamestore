@@ -34,7 +34,6 @@ import { useGameConsoleStore } from '@/store/console';
 const gameStore = useGameStore();
 const consoleStore = useGameConsoleStore();
 
-
 const allGame = gameStore.game;
 const allConsole = consoleStore.gameConsole;
 const orderData = [
