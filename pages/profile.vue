@@ -32,14 +32,14 @@
                 <div class="section basic-information bg-white shadow-md rounded-md p-4">
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Account Information</h3>
                     <div class="profile-form mt-8"> <label for="name">Full Name:</label> <input type="text" id="name"
-                            v-model="userForm.fullName"
+                            v-model="userForm.fullName" :readonly="!isEditMode"
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
-                        <label for="email" class="block mb-2">Email Address:</label> <input type="email" id="email" readonly
-                            v-model="userForm.email"
+                        <label for="email" class="block mb-2">Email Address:</label> <input type="email" id="email"
+                            readonly v-model="userForm.email"
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
 
                         <label for="phone" class="block mb-2">Phone number:</label> <input type="text" id="phone"
-                            v-model="userForm.phoneNumber"
+                            v-model="userForm.phoneNumber" :readonly="!isEditMode"
                             class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4" />
 
                         <!-- validate_password -->
@@ -54,23 +54,23 @@
                 <div class=" address-form section system-settings mt-8 bg-white shadow-md rounded-md p-4">
                     <h1 class="text-xl font-bold text-gray-800 mb-4"> Address Information</h1>
                     <label for="address" class="block mb-2">Address:</label>
-                    <textarea type="text" id="address" v-model="userForm.address.address"
+                    <textarea type="text" id="address" v-model="userForm.address.address" :readonly="!isEditMode"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกที่อยู่ของคุณ" />
 
                     <label for="province" class="block mb-2">Province:</label>
-                    <input type="text" id="province" v-model="userForm.address.province"
+                    <input type="text" id="province" v-model="userForm.address.province" :readonly="!isEditMode"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกจังหวัดของคุณ" />
 
                     <label for="district" class="block mb-2">District:</label>
-                    <input type="text" id="district" v-model="userForm.address.district"
+                    <input type="text" id="district" v-model="userForm.address.district" :readonly="!isEditMode"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกอำเภอของคุณ" />
 
 
                     <label for="subdistrict" class="block mb-2">Subdistrict:</label>
-                    <input type="text" id="subdistrict" v-model="userForm.address.subDistrict"
+                    <input type="text" id="subdistrict" v-model="userForm.address.subDistrict" :readonly="!isEditMode"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกตำบลของคุณ" />
                     <!-- <label for="province" class="block mb-2">Province:</label>
@@ -97,13 +97,23 @@
 
 
                     <label for="postal-code" class="block mb-2">PostalCode:</label>
-                    <input type="number" id="postal-code" v-model="userForm.address.postalCode"
+                    <input type="number" id="postal-code" v-model="userForm.address.postalCode" :readonly="!isEditMode"
                         class="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 mb-4"
                         placeholder="กรอกรหัสไปรษณีย์ของคุณ" />
                 </div>
-                <button @click="updateUserFunc()"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">Save
+
+                <button v-if="!isEditMode" @click="toggleEditMode"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">Edit
                 </button>
+                <button v-if="isEditMode" @click="saveChanges"
+                    class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">Save
+                </button>
+                <button v-if="isEditMode" @click="cancelEdit"
+                    class="bg-red-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-5">Cancel
+                </button>
+                <!-- <button @click="updateUserFunc()"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">Save
+                </button> -->
             </div>
         </div>
     </div>
@@ -115,6 +125,21 @@ import subdistricts from "@/assets/static/thai_tambons.json";
 import provinces from "@/assets/static/thai_provinces.json";
 import Swal from 'sweetalert2';
 import { useAuth } from "@/store/user";
+
+const isEditMode = ref(false);
+const toggleEditMode = () => {
+    isEditMode.value = !isEditMode.value;
+};
+const saveChanges = () => {
+    // Save changes logic here
+    updateUserFunc();
+    isEditMode.value = false;
+};
+
+const cancelEdit = () => {
+    // Revert changes or reset form values
+    isEditMode.value = false;
+};
 
 const authStore = useAuth();
 
