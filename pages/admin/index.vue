@@ -21,7 +21,7 @@
               >
             </div>
             <div
-              @click="selectedSide = 'productList'"
+              @click="selectedSide = 'productList', fetchProduct()"
               class="flex items-center px-3 py-2 text-gray-600 font-['kanit'] transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             >
               <ListBulletIcon class="h-6 w-6" aria-hidden="true" />
@@ -30,7 +30,7 @@
               >
             </div>
             <div
-              @click="(selectedSide = 'orderList'), fetchAllOrder()"
+              @click="selectedSide = 'orderList'"
               class="flex items-center px-3 py-2 text-gray-600 font-['kanit'] transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             >
               <TruckIcon class="h-6 w-6" aria-hidden="true" />
@@ -62,19 +62,18 @@
             <th class="font-['kanit'] border px-4 py-2">ประเภท</th>
             <th class="font-['kanit'] border px-4 py-2">เครื่องที่รองรับ</th>
             <th class="font-['kanit'] border px-4 py-2">เเนวเกม</th>
-            <th class="font-['kanit'] border px-4 py-2">ขนาด</th>
-            <th class="font-['kanit'] border px-4 py-2">เกรด</th>
             <th class="font-['kanit'] border px-4 py-2">ราคา</th>
             <th class="font-['kanit'] border px-4 py-2">คงเหลือ</th>
+            <th class="font-['kanit'] border px-4 py-2">วันที่วางขาย</th>
             <th class="font-['kanit'] border px-4 py-2">แก้ไข</th>
             <th class="font-['kanit'] border px-4 py-2">ลบ</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in product" :key="item.Id">
+          <tr v-for="item in products" :key="item.Id">
             <td class="font-['kanit'] border px-4 py-2">{{ item.Id }}</td>
             <td class="font-['kanit'] border px-4 py-2">
-              <img :src="item.image[0]" alt="" class="h-16 w-16 object-cover" />
+              <img :src="item.images[0]" alt="" class="h-16 w-16 object-cover" />
             </td>
             <td class="font-['kanit'] border px-4 py-2">{{ item.name }}</td>
             <td class="font-['kanit'] border px-4 py-2">
@@ -98,12 +97,19 @@
               <PencilSquareIcon class="h-6 w-6" aria-hidden="true" />
             </td>
             <td class="font-['kanit'] border px-4 py-2">
-              <TrashIcon class="h-6 w-6" aria-hidden="true" />
+              <button>
+                <TrashIcon
+                  @click="deleteProductById(item.type, item.Id)"
+                  class="h-6 w-6"
+                  aria-hidden="true"
+                />
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
       <div v-if="selectedSide == 'addProduct'">
+        {{products}}
         <div class="m-10 flex flex-col space-y-4">
           <div>
             <label class="text-lg font-['kanit'] text-gray-500"
@@ -112,7 +118,6 @@
             <input
               id="name"
               name="name"
-              placeholder="Gundum RX78"
               v-model="newProduct.name"
               class="block w-full rounded font-['kanit'] border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-base text-gray-500 placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-gray-300"
             />
@@ -126,7 +131,6 @@
             <textarea
               id="description"
               name="description"
-              placeholder="รายละเอียดสินค้า"
               v-model="newProduct.description"
               class="block w-full rounded font-['kanit'] border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-base text-gray-500 placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-gray-300"
             />
@@ -148,7 +152,7 @@
           </div>
 
           <div v-if="newProduct.type == 'Game'" class="mr-6 flex flex-wrap">
-            <div class="mr-5">
+            <div class="mr-5 flex flex-col">
               <label for="price" class="text-lg font-['kanit'] text-gray-500"
                 >เเนวเกม</label
               >
@@ -156,10 +160,10 @@
                 v-model="newProduct.genre"
                 data-placeholder="Begin typing a name to filter..."
                 multiple
-                class="chosen-select"
+                class="block w-full rounded font-['kanit'] border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-base text-gray-500 placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-gray-300"
                 name="test"
               >
-                 <option
+                <option
                   v-for="item in genre.options"
                   :key="item.value"
                   :value="item.value"
@@ -170,17 +174,18 @@
             </div>
             <div class="mr-5">
               <label for="stock" class="text-lg font-['kanit'] text-gray-500"
-                >เกรด</label
+                >เครื่องที่รองรับ</label
               >
               <select
-                v-model="newProduct.subdevice"
+                v-model="newProduct.supDevice"
                 name="type"
                 id="type"
+                data-placeholder="Begin typing a name to filter..."
+                multiple
                 class="block w-full rounded font-['kanit'] border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-base text-gray-500 placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-gray-300"
               >
-                <option value="" selected disabled>เกรด</option>
                 <option
-                  v-for="item in subdevice.options"
+                  v-for="item in supDevice.options"
                   :key="item.value"
                   :value="item.value"
                 >
@@ -192,13 +197,12 @@
           <div class="mr-6 flex flex-wrap">
             <div class="mr-5">
               <label for="price" class="text-lg font-['kanit'] text-gray-500"
-                >เครื่องที่รองรับ</label
+                >เเบรนด์</label
               >
               <input
                 id="price"
                 name="price"
                 type="text"
-                placeholder="Bandai"
                 v-model="newProduct.brand"
                 class="block w-64 rounded font-['kanit'] border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-base text-gray-500 placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-gray-300"
               />
@@ -245,9 +249,9 @@
             </div>
           </div>
         </div>
+        <button @click="addProduct()">เพิ่มสินค้า</button>
         {{ newProduct }}
       </div>
-
       <table v-if="selectedSide == 'orderList'">
         <thead>
           <tr class="sticky top-0 bg-white">
@@ -333,20 +337,12 @@ const authStore = useAuth();
 const config = useRuntimeConfig();
 const selectedSide = ref(null);
 const { $api } = useNuxtApp();
+
+const formData = new FormData();
 const onFileChange = (event) => {
   const files = event.target.files;
-  // Clear existing images before adding new ones
-  newProduct.value.images = [];
   for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    // Read the file as a data URL
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      // Push the data URL to the images array
-      newProduct.value.images.push(e.target.result);
-    };
-    // Read the file
-    reader.readAsDataURL(file);
+    formData.append("files", files[i]);
   }
 };
 
@@ -354,34 +350,36 @@ const genre = {
   id: "genreId",
   name: "genre",
   options: [
-    { value: "Universal Century", checked: false },
-    { value: "Future Century", checked: false },
-    { value: "After Colony", checked: false },
-    { value: "After War", checked: false },
-    { value: "Correct Century", checked: false },
-    { value: "Cosmic Era", checked: false },
-    { value: "Anno Domini", checked: false },
-    { value: "Advanced Generation", checked: false },
-    { value: "Regild Century", checked: false },
-    { value: "Post Disaster", checked: false },
-    { value: "Ad Stella", checked: false },
-    { value: "Present", checked: false },
+    { value: "Action", checked: false },
+    { value: "Adventure", checked: false },
+    { value: "Anime", checked: false },
+    { value: "Battle Royal", checked: false },
+    { value: "Family", checked: false },
+    { value: "Music", checked: false },
+    { value: "Mystery", checked: false },
+    { value: "Racing", checked: false },
+    { value: "Rpg", checked: false },
+    { value: "Strategy", checked: false },
+    { value: "Sport", checked: false },
+    { value: "Puzzle", checked: false },
+    { value: "Horror", checked: false },
+    { value: "Survival", checked: false },
+    { value: "Open World", checked: false },
   ],
 };
 
-const subdevice = {
-  id: "subdeviceId",
-  name: "subdevice",
+const supDevice = {
+  id: "supDeviceId",
+  name: "supDevice",
   options: [
-    { value: "SD Super Deformed", checked: false },
-    { value: "Entry subdevice", checked: false },
-    { value: "High subdevice", checked: false },
-    { value: "Real subdevice", checked: false },
-    { value: "Master subdevice", checked: false },
-    { value: "Full Mechanic", checked: false },
-    { value: "Perfect subdevice", checked: false },
-    { value: "Metal Build", checked: false },
-    { value: "Mega Size", checked: false },
+    { value: "Playstation5", checked: false },
+    { value: "Playstation4", checked: false },
+    { value: "Playstation3", checked: false },
+    { value: "Nintendo Switch – OLED Model", checked: false },
+    { value: "Nintendo Switch", checked: false },
+    { value: "Nintendo Switch Lite", checked: false },
+    { value: "XBOX SERIES X", checked: false },
+    { value: "XBOX SERIES S", checked: false },
   ],
 };
 
@@ -392,9 +390,9 @@ const newProduct = ref({
   brand: "",
   genre: [],
   scale: "",
-  subdevice: "",
-  price: null,
-  stock: null,
+  supDevice: [],
+  price: 0,
+  stock: 0,
   images: [],
 });
 
@@ -447,7 +445,69 @@ const groupedData = computed(() => {
   }, {});
 });
 
-const product = ref([]);
+const products = ref([]);
+const addProduct = async () => {
+  try {
+    const config = useRuntimeConfig();
+    const response = await $fetch(config.public.baseURL + "s3/upload-image", {
+      body: formData,
+      header: {
+        "Content-Type": "multipart/form-data",
+      },
+      method: "POST",
+    });
+    newProduct.value.images = response.imageUrls;
+    if (newProduct.value.type == "Game") {
+      try {
+        await $api("games/addGame", {
+          method: "POST",
+          body: newProduct.value,
+        });
+        fetchProduct()
+      } catch (error) {
+        console.log(error.message);
+      }
+    } else if (newProduct.value.type == "Console") {
+      try {
+        await $api("consoles/addConsole", {
+          method: "POST",
+          body: newProduct.value,
+        });
+        fetchProduct()
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const deleteProductById = async (type, id) => {
+  try {
+    if (type === "game") {
+      const res = await $api("games/deleteGame/" + id, {
+        method: "DELETE",
+      });
+      products.value = products.value.filter(
+        (item) => !(item.type === "game" && item.Id === id)
+      );
+      console.log(res);
+      alert("Delete gameProduct Id: " + id + " success");
+    } else if (type === "console") {
+      const res = await $api("consoles/deleteConsole/" + id, {
+        method: "DELETE",
+      });
+      products.value = products.value.filter(
+        (item) => !(item.type === "console" && item.Id === id)
+      );
+      console.log(res);
+      alert("Delete consoleProduct Id: " + id + " success");
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 const fetchProduct = async () => {
   try {
@@ -458,10 +518,10 @@ const fetchProduct = async () => {
       method: "GET",
     });
     if (games == null) {
-      return (games = []);
+      games = [];
     }
-    if (consoles == null) {
-      return (consoles = []);
+    else if (consoles == null) {
+      consoles = [];
     }
     games = games.map((item) => ({
       ...item,
@@ -472,10 +532,12 @@ const fetchProduct = async () => {
       type: "console",
     }));
 
-    product.value = [...games, ...consoles];
+    products.value = [...games, ...consoles];
+    console.log(products.value)
   } catch (error) {
     console.log(error.message);
   }
 };
 fetchProduct();
+fetchAllOrder();
 </script>
