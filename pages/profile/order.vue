@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="text-2xl font-bold mb-4">Orders History</h1>
-        <div v-for="order in resultArray" :key="order.orderId" class="bg-white rounded-lg shadow-md p-6 mb-4">
+        <div v-for="order in groupedData" :key="order.orderId" class="bg-white rounded-lg shadow-md p-6 mb-4">
             <h2 class="text-xl font-semibold mb-2">Order ID: {{ order.orderId }}</h2>
             <p class="text-gray-600">Order Date: {{ order.orderDate }}</p>
             <p class="text-gray-600">Shipping Method: {{ order.shippingMethod }}</p>
@@ -31,69 +31,45 @@
 import { ref } from 'vue';
 import { useGameStore } from '@/store/game';
 import { useGameConsoleStore } from '@/store/console';
+import { useAuth } from "@/store/user";
 const gameStore = useGameStore();
 const consoleStore = useGameConsoleStore();
+const authStore = useAuth();
 
-const allGame = gameStore.game;
-const allConsole = consoleStore.gameConsole;
-const orderData = [
-    {
-        "orderId": "83502815-4d82-4da4-a18c-40169fc97b74",
-        "productId": "1",
-        "quantity": 1,
-        "customerId": "123",
-        "orderDate": "2024-02-29T12:34:56Z",
-        "status": "Pending",
-        "subtotal": 1600,
-        "shippingAddress": "123 Main St, City",
-        "shippingMethod": "express",
-        "type": "Console"
-    },
-    {
-        "orderId": "83502815-4d82-4da4-a18c-40169fc97b74",
-        "productId": "3",
-        "quantity": 2,
-        "customerId": "123",
-        "orderDate": "2024-02-29T12:34:56Z",
-        "status": "Pending",
-        "subtotal": 800,
-        "shippingAddress": "123 Main St, City",
-        "shippingMethod": "express",
-        "type": "Game"
-    },
-    {
-        "orderId": "83502815-4d82-4da4-a18c-40169fc97b72",
-        "productId": "3",
-        "quantity": 2,
-        "customerId": "123",
-        "orderDate": "2024-02-29T12:34:56Z",
-        "status": "Pending",
-        "subtotal": 800,
-        "shippingAddress": "123 Main St, City",
-        "shippingMethod": "express",
-        "type": "Game"
-    },
-];
 
-const groupedData = ref(orderData.reduce((acc, order) => {
+const orderData = ref([])
+
+const fetchAllOrder = async () => {
+  try {
+    const { $api } = useNuxtApp()
+    const response = await $api("orders/userOrders", {
+          method: 'GET',
+        });
+    if (response == null) {
+      return (orderData.value = []);
+    }
+    orderData.value = response;
+    console.log(orderData.value)
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const groupedData = computed(() => orderData.value.reduce((acc, order) => {
     const key = order.orderId;
 
-    // ถ้า key นี้ยังไม่มีใน acc ให้สร้าง object ใหม่
     if (!acc[key]) {
         acc[key] = {
             orderId: key,
             orderDate: order.orderDate,
             shippingMethod: order.shippingMethod,
-            total: 0, // Initialize total price to 0
+            total: 0,
             detail: []
         };
     }
 
-    //คำนวณราคารวมของแต่ละ order
-    // const totalPrice = order.quantity * order.subtotal;
-    acc[key].total += order.subtotal; // Add the current order's total to the overall total
+    acc[key].total += order.subtotal;
 
-    // เพิ่ม order detail ลงไปใน array
     acc[key].detail.push({
         productId: order.productId,
         quantity: order.quantity,
@@ -107,12 +83,9 @@ const groupedData = ref(orderData.reduce((acc, order) => {
     return acc;
 }, {}));
 
-// แปลง object ให้เป็น array
-const resultArray = Object.values(groupedData.value);
-
 function findGameName(productId) {
-    if (allGame && Array.isArray(allGame)) {
-        const game = allGame.find(game => game.Id+"" === productId);
+    if (gameStore.games && Array.isArray(gameStore.games)) {
+        const game = gameStore.games.find(game => game.Id+"" === productId);
         return game ? game.name : 'Unknown Game';
     } else {
         return 'Game data not loaded';
@@ -120,12 +93,12 @@ function findGameName(productId) {
 }
 
 function findConsoleName(productId) {
-    if (allConsole && Array.isArray(allConsole)) {
-        const consoleItem = allConsole.find(console => console.Id+"" === productId);
+    if (consoleStore.gameConsoles && Array.isArray(consoleStore.gameConsoles)) {
+        const consoleItem = consoleStore.gameConsoles.find(console => console.Id+"" === productId);
         return consoleItem ? consoleItem.name : 'Unknown Console';
     } else {
         return 'Console data not loaded';
     }
 }
-
+fetchAllOrder();
 </script>

@@ -52,7 +52,7 @@
         >
           <div class="flex items-center justify-center">
             <img src="~/assets/add-to-basket.png" width="32" height="32" />
-            <p class="ml-2">Add to Cart</p>
+            <a @click="addToCart()" class="ml-2">Add to Cart</a>
           </div>
         </button>
       </div>
@@ -84,7 +84,7 @@
       >
         <div class="flex items-center justify-center">
           <img src="~/assets/add-to-basket.png" width="32" height="32" />
-          <p class="ml-2">Add to Cart</p>
+          <a @click="addToCart()" class="ml-2">Add to Cart</a>
         </div>
       </button>
     </div>
@@ -117,9 +117,8 @@ onMounted(async () => {
   });
 });
 
-const addToCart = (product) => {
-  cartStore.add(product);
-  s;
+const addToCart = () => {
+  cartStore.add(product.value)
 };
 </script>
 <style>

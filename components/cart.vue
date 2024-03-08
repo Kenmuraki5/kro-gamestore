@@ -37,7 +37,7 @@
                                                         class="flex py-6">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                            <img :src="product.image[0]"
+                                                            <img :src="product.images[0]"
                                                                 class="h-full w-full object-cover object-center" />
                                                         </div>
 

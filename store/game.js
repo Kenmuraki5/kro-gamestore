@@ -16,8 +16,17 @@ export const useGameStore = defineStore("game", {
         async fetchGame() {
             try {
                 const { $api } = useNuxtApp()
-                this.games = await $api("games", {
+                const games = await $api("games", {
                     method: 'GET',
+                });
+                if (games == null){
+                    return this.games = games
+                }
+                this.games = games.map(game => {
+                    return {
+                        type: 'Game',
+                        ...game
+                    };
                 });
             } catch (error) {
                 console.error('Fetch user failed:', error);

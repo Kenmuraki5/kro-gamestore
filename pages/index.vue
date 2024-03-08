@@ -4,13 +4,13 @@
             <Slide v-for="slide in event" :key="slide">
                 <div class="xl:h-full sm:h-auto h-32 carousel__item">
                     <div class="top-left w-screen sm:w-full">
-                        <img class="min-w-9 md:w-72 w-32" :src="slide.logo">
-                        <div class="text-left w-72">
-                            <p class="xl:text-xl text-lg my-5">{{ slide.title }}</p>
-                            <p class="text-xs xl:text-base">{{ slide.description }}</p>
+                        <img class="min-w-9 md:w-80 w-32" :src="slide?.logo">
+                        <div class="text-left xl:w-96 w-72">
+                            <p class="xl:text-5xl text-lg md:my-12 my-5">{{ slide.title }}</p>
+                            <p class="text-xs xl:text-base md:my-12 my-5">{{ slide.description }}</p>
                         </div>
                     </div>
-                    <img :src="slide.src" />
+                    <img :src="slide.src" class="xl:w-screen xl:h-svh w-auto h-50" />
                 </div>
             </Slide>
 
@@ -84,6 +84,14 @@
 <script setup>
 import { useGameStore } from "@/store/game";
 import { useGameConsoleStore } from "@/store/console";
+import takken8 from '~/assets/bg/takken8.jpeg'
+import spidermanRemaster from '~/assets/bg/spiderman-remaster.png'
+import grandblueRelink from '~/assets/bg/grandblue-relink.png'
+
+import takken8logo from '~/assets/gamelogo/takken8logo.jpeg'
+import spidermanRemasterlogo from '~/assets/gamelogo/spiderman-remasterlogo.png'
+import grandblueRelinklogo from '~/assets/gamelogo/grandblue-relinklogo.png'
+
 const gameStore = useGameStore();
 const gameConsoleStore = useGameConsoleStore();
 
@@ -92,20 +100,20 @@ const event = [
     {
         title: "กำปั้นพบกับโชคชะตา",
         description: "มหากาพย์ Mishima ยังคงดำเนินต่อไป สัมผัสกับเรื่องราวใหม่สุดยิ่งใหญ่ที่ประกอบด้วยนักสู้ที่ไม่ธรรมดามากมาย",
-        src: "https://gmedia.playstation.com/is/image/SIEPDC/tekken8-hero-banner-desktop-01-en-26jan24?$4000px$",
-        logo: "https://gmedia.playstation.com/is/image/SIEPDC/tekken-8-logo-01-en-21sep22?$800px--t$",
+        src: takken8,
+        logo: takken8logo,
     },
     {
-        title: "เฉลิมฉลองปีใหม่ของ Teyvat",
-        description: "เป็นส่วนหนึ่งของอีเว้นท์ Lantern Rite และสำรวจสถานที่ใหม่ Chenyu Vale ในการอัปเดตใหญ่ครั้งใหม่ของเกม RPG ผจญภัยแบบโลกเปิดที่ได้รับคำชมมากมาย",
-        src: "https://gmedia.playstation.com/is/image/SIEPDC/genshin-impact-4-4-hero-desktop-01-en-18jan24?$3200px$",
-        logo: "https://gmedia.playstation.com/is/image/SIEPDC/genshin-impact-white-logo-01-ps4-16nov21$en?$1200px--t$"
+        title: "Marvel's Spider-Man Remastered",
+        description: "รีมาสเตอร์และปรับปรุงใหม่เพื่อคอนโซล PS5™ รับประสบการณ์การผจญภัยที่ได้รางวัลพร้อมงานภาพพัฒนาใหม่และฟีเจอร์ใหม่ๆ อันน่าตื่นตาตื่นใจ*",
+        src: spidermanRemaster,
+        logo: spidermanRemasterlogo
     },
     {
-        title: "เผยภัยคุกคามที่กำลังก่อตัว",
-        description: "บริหารทรัพยากร เผชิญหน้ากับเหล่า Construct สุดโหด และฟันฝ่าความท้าทายใหม่ล่าสุดต่างๆของ Sanctuary ใน Season of the Construct",
-        src: "https://gmedia.playstation.com/is/image/SIEPDC/Diablo-iv-Season-3-hero-banner-desktop-01-en-22jan24?$4000px$",
-        logo: "https://gmedia.playstation.com/is/image/SIEPDC/Diablo-iv-Season-3-logo-01-en-22jan24?$1200px--t$"
+        title: "Granblue Fantasy: Relink",
+        description: "Granblue Fantasy: Relink เป็นเกมเล่นตามบทบาทแอ็กชันปี 2024 ที่พัฒนาและเผยแพร่โดย Cygames เกมดังกล่าวเปิดตัวโดยเป็นส่วนหนึ่งของแฟรนไชส์ ​​Granblue Fantasy สำหรับ PlayStation 4, PlayStation 5",
+        src: grandblueRelink,
+        logo: grandblueRelinklogo
     }
 ]
 

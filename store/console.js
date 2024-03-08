@@ -1,30 +1,39 @@
 import { defineStore } from "pinia";
 export const useGameConsoleStore = defineStore("gameConsole", {
   state: () => ({
-    gameConsole: [],
+    gameConsoles: [],
   }),
   actions: {
     add(item) {
-      this.gameConsole.push(item);
+      this.gameConsoles.push(item);
     },
     remove(index) {
-      this.gameConsole.splice(index, 1);
+      this.gameConsoles.splice(index, 1);
     },
     edit(index, item) {
-      this.gameConsole[index] = item;
+      this.gameConsoles[index] = item;
     },
     async fetchGameConsole() {
       try {
         const { $api } = useNuxtApp()
-        this.gameConsole = await $api('consoles', {
+        const gameConsoles = await $api('consoles', {
           method: 'GET',
         });
+        if (gameConsoles == null){
+          return this.gameConsoles = [];
+        }
+        this.gameConsoles = gameConsoles.map(gameConsole => {
+          return {
+              type: 'Console',
+              ...gameConsole
+          };
+      });
       } catch (error) {
         console.log(error)
       }
 
       //mock data
-      // this.gameConsole = [
+      // this.gameConsoles = [
       //   {
       //     id: 1,
       //     name: "Playstation 5",

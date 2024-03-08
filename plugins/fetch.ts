@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
   const $api = $fetch.create({
     baseURL: config.public.baseURL,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": 'application/json',
       "Authorization": "bearer " + authStore.token
     }
   })

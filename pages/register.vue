@@ -193,7 +193,7 @@ const address = ref({
     postalcode: ""
 })
 
-const registerUser = () => {
+const registerUser = async () => {
     const useraddress = {
         address: address.value.address,
         province: address.value.province.name_th,
@@ -201,7 +201,7 @@ const registerUser = () => {
         subDistrict: address.value.subDistrict.name_th,
         postalcode: address.value.postalcode
     }
-    auth.register(form.value, useraddress)
+    await auth.register(form.value, useraddress)
     Swal.fire({
         position: "center",
         icon: "success",

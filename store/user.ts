@@ -22,7 +22,7 @@ interface Address {
   address: string;
   province: string;
   district: string;
-  subdistrict: string;
+  subDistrict: string;
   postalcode: string;
 }
 
@@ -68,12 +68,15 @@ export const useAuth = defineStore('auth', {
               address: address.address, 
               province: address.province,
               district: address.district,
-              subDistrict: address.subdistrict,
+              subDistrict: address.subDistrict,
               postalCode: address.postalcode
             }
           },
         });
-        this.fetchUser();
+        if (this.token){
+          this.fetchUser()
+          navigateTo("/")
+        }
       } catch (error) {
         console.error('Registration failed:', error);
         return error
