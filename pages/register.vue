@@ -170,7 +170,9 @@ import subdistricts from "../assets/static/thai_tambons.json";
 import provinces from "../assets/static/thai_provinces.json";
 import Swal from 'sweetalert2';
 import { useAuth } from "~/store/user";
+import { useRouter} from "vue-router";
 
+const router = useRouter()
 const auth = useAuth()
 
 const form = ref({
@@ -207,6 +209,7 @@ const registerUser = () => {
         showConfirmButton: false,
         timer: 1500
     });
+    router.push("/login")
 };
 
 definePageMeta({
