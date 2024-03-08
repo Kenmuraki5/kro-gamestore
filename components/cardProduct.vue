@@ -1,5 +1,5 @@
 <template>
-  <img :src="product.image[0]" alt="Product Image" class="w-full h-64 object-contain rounded-md mb-4">
+  <img :src="product.images[0]" alt="Product Image" class="w-full h-64 object-contain rounded-md mb-4">
   <nuxt-link :to="`${$route.fullPath}/${product.Id}`"
     class="text-xl font-bold hover:text-[#71BDC1] mb-2 hover:underline decoration-[#71BDC1]">{{ product.name
     }}</nuxt-link>
