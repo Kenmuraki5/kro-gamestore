@@ -1,37 +1,39 @@
 <template>
 
   
-  <div class="m-10">
-    <h1 class="hot-deals-title text-center md:text-left">Top Game Hot deals</h1>
+  <!-- <div>
+    <h1 class="hot-deals-title text-center md:text-left">Top 10 Console Hot deals</h1>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 m-5 gap-4">
-      <div v-for="(game, index) in gameStore.games" :key="index" class="hover:-translate-y-6 duration-300 ease-in-out">
-        <NuxtLink :to="'CD-game/'+game.Id"><img class="w-full h-auto rounded game-img" :src="game.images[0]" v-if="game.images[0] !== ''" alt="Game Image"></NuxtLink>
-        <h1 class="game-name" v-if="game.images[0] !== ''">{{ game.name }}</h1>
+      <div v-for="(game, index) in games" :key="index" class="hover:-translate-y-6 duration-300 ease-in-out">
+        <img class="w-full h-auto rounded game-img" :src="game.src" v-if="game.src !== ''" alt="Game Image">
+        <h1 class="game-name" v-if="game.src !== ''">{{ game.name }}</h1>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="m-4">
-    <h1 class="hot-deals-title ml-10"> Nintendo</h1>
+  <div class="m-4" v-for="(game_type, type_index) in game_types" :key="type_index">
+    <h1 class="hot-deals-title ml-10"> {{ game_type.name }}
+      <!-- <span class="text-base absolute right-12 h-16 w-16 decoration-slate-100">View more</span> -->
+    </h1>
+    <!-- <h2 class="viewMore">View more</h2> -->
     <div class=" ml-10 mr-10">
-      <Carousel :items-to-show="2">
-        <Slide v-for="(game, index) in gameStore.games" :key="index">
-          <div class="grid grid-rows-1.5 m-5 gap-4 carousel__item2 rounded" v-if="index < gameStore.games.length">
+      <Carousel :items-to-show="5.5">
+        <Slide v-for="(game, index) in game_type.games" :key="index">
+          <div class="grid grid-rows-1.5 m-5 gap-4 carousel__item2 rounded" v-if="index < games.length">
             <div>
-              <NuxtLink :to="'CD-game/'+game.Id">
-              <img :src="game.images[0]" alt="Game Image" v-if="game.src != ''" />
-            </NuxtLink>
+              <img :src="game.src" alt="Game Image" v-if="game.src != ''" />
             </div>
 
             <div class="h-20">
               <h1 class="game-label text-black text-2xl">{{ game.name }}</h1>
-              <h2 style="color: #555;">{{ game.genre[0] }}</h2>
+              <h2>some Desc</h2>
             </div>
           </div>
         </Slide>
         <!-- viewMore -->
         <Slide v-if="game_types.length > 0" :key="'extra_slide'">
-          <NuxtLink to="CD-game">
+          <NuxtLink :to=game_type.link>
             <h1 class="game-label view-more m-2 text-blue-700 text-3xl mb-16"> View More</h1>
           </NuxtLink>
         </Slide>
@@ -41,50 +43,12 @@
       </Carousel>
     </div>
   </div>
-
-  <div class="m-4">
-    <h1 class="hot-deals-title ml-10"> Console </h1>
-    <div class=" ml-10 mr-10">
-      <Carousel :items-to-show="2">
-        <Slide v-for="(console, index) in gameConsoleStore.gameConsoles" :key="index">
-          <div class="grid grid-rows-1.5 m-5 gap-4 carousel__item2 rounded" v-if="index < gameConsoleStore.gameConsoles.length">
-            <div>
-              <NuxtLink :to="'game-console/'+ console.Id">
-              <img :src="console.images[0]" alt="Game Image" v-if="console.images[0] != ''" />
-            </NuxtLink>
-            </div>
-
-            <div class="h-20">
-              <h1 class="game-label text-black text-2xl">{{ console.name }}</h1>
-              <h2 style="color: #555;">console device</h2>
-            </div>
-          </div>
-        </Slide>
-        <!-- viewMore -->
-        <Slide v-if="game_types.length > 0" :key="'extra_slide'">
-          <NuxtLink to="game-console">
-            <h1 class="game-label view-more m-2 text-blue-700 text-3xl mb-16"> View More</h1>
-          </NuxtLink>
-        </Slide>
-        <template #addons>
-          <Navigation />
-        </template>
-      </Carousel>
-    </div>
-  </div>
-
-
-
 </template>
 
 <script setup>
 import { useGameStore } from "@/store/game";
 const gameStore = useGameStore();
 // console.log(gameStore)
-import { useGameConsoleStore } from "@/store/console";
-
-const gameConsoleStore = useGameConsoleStore();
-
 
 const games = [
   {

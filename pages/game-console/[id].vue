@@ -6,7 +6,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
-                    <Slide v-for="slide in product.image" :key="slide">
+                    <Slide v-for="slide in product.images" :key="slide">
                         <div class="xl:h-full sm:h-auto h-full">
                             <img :src="slide" class="w-full object-cover" />
                         </div>
@@ -44,14 +44,14 @@ const id = route.params.id;
 const product = ref({});
 
 
-// onMounted(async ()=> {
-//     await gameConsoleStore.fetchGameConsole();
-//     gameConsoleStore.gameConsole.filter((item) => {
-//         if (item.Id == id) {
-//             product.value = item;
-//         }
-//     });
-// })
+onMounted(async ()=> {
+    await gameConsoleStore.fetchGameConsole();
+    gameConsoleStore.gameConsoles.filter((item) => {
+        if (item.Id == id) {
+            product.value = item;
+        }
+    });
+})
 const addToCart = (product) => {
     cartStore.add(product);
 }

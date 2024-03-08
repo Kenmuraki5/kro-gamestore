@@ -4,9 +4,9 @@
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
     >
-      <div v-if="gameConsoleStore.gameConsole">
+      <div v-if="gameConsoleStore.gameConsoles">
         <div
-          v-for="product in gameConsoleStore.gameConsole"
+          v-for="product in gameConsoleStore.gameConsoles"
           :key="product.Id"
           class="bg-white p-4 m-10 rounded-lg shadow-md"
         >
