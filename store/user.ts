@@ -58,7 +58,7 @@ export const useAuth = defineStore('auth', {
     async register(form: Form, address: Address) {
       try {
         const { $api } = useNuxtApp()
-        this.token = await $api("users/addCustomer", {
+        this.token = await $api("users/addUser", {
           method: 'POST',
           body: {
             ...form, 
