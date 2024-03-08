@@ -3,4 +3,4 @@
     <slot></slot><!-- page -->
     
     <Customfooter/>
-</template> 
+</template>

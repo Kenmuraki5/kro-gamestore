@@ -10,7 +10,7 @@
             <div v-for="detail in order.detail" :key="detail.productId" class="border-t border-gray-200 pt-2 mt-2">
                 <p><span class="font-semibold">Product ID:</span> {{ detail.productId }}</p>
                 <p><span class="font-semibold">Quantity:</span> {{ detail.quantity }}</p>
-                <p><span class="font-semibold">Customer ID:</span> {{ detail.customerId }}</p>
+                <p><span class="font-semibold">Email:</span> {{ detail.email }}</p>
                 <p><span class="font-semibold">Status:</span> {{ detail.status }}</p>
                 <p><span class="font-semibold">Subtotal:</span> {{ detail.subtotal }}</p>
                 <p><span class="font-semibold">Shipping Address:</span> {{ detail.shippingAddress }}</p>
@@ -73,7 +73,7 @@ const groupedData = computed(() => orderData.value.reduce((acc, order) => {
     acc[key].detail.push({
         productId: order.productId,
         quantity: order.quantity,
-        customerId: order.customerId,
+        email: order.email,
         status: order.status,
         subtotal: order.subtotal,
         shippingAddress: order.shippingAddress,

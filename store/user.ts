@@ -14,8 +14,9 @@ interface User {
   email: string;
   password: string;
   phoneNumber: string;
-  imageProfile: [];
+  imageProfile: string[];
   address: Address;
+  role: string;
 }
 
 interface Address {
@@ -34,7 +35,8 @@ export const useAuth = defineStore('auth', {
   }),
 
   getters: {
-    isAuthenticated: (state) => !!state.token
+    isAuthenticated: (state) => !!state.token,
+    isAdmin: (state) => state.user.role
   },
 
   actions: {
