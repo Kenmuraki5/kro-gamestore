@@ -44,16 +44,14 @@ const id = route.params.id;
 const product = ref({});
 
 
-onMounted(async ()=> {
-    await gameConsoleStore.fetchGameConsole();
-    gameConsoleStore.gameConsole.filter((item) => {
-        if (item.Id == id) {
-            product.value = item;
-        }
-    });
-})
-
-
+// onMounted(async ()=> {
+//     await gameConsoleStore.fetchGameConsole();
+//     gameConsoleStore.gameConsole.filter((item) => {
+//         if (item.Id == id) {
+//             product.value = item;
+//         }
+//     });
+// })
 const addToCart = (product) => {
     cartStore.add(product);
 }

@@ -48,7 +48,9 @@ export const useAuth = defineStore('auth', {
             password: password,
           },
         });
-        this.fetchUser()
+        if (this.token){
+          this.fetchUser()
+        }
         navigateTo({ path: '/' })
       } catch (error) {
         console.log(error)
