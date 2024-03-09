@@ -1,31 +1,6 @@
 <template>
     <div class="profile-page  pt-16 px-4 bg-gray-100">
         <h1 class="text-4xl font-bold  text-gray-900 mb-5 ml-10 ">Profile </h1>
-        <div class="profile-header flex justify-start items-center ml-5">
-            <div class="profile-image rounded-full overflow-hidden mr-4 w-40 h-40">
-                <img :src="userForm.imageProfile" alt="Profile avatar"
-                    class="profile-avatar min-w-200 min-h-200 object-cover w-full h-full" />
-
-            </div>
-            <div class="profile-info  ml-5">
-                <!-- <h2 class="text-3xl font-bold text-gray-800">{{ userForm.fullName }}</h2>
-                <p class="text-gray-600 m-1">{{ userForm.username }}</p>
-                <p class="text-gray-600 m-1 decoration-2 underline decoration-sky-500">{{ userForm.email }}</p> -->
-                <h3 class="mt-3">Change picture</h3>
-                <div class="flex items-center justify-center text-gray-400 border-2 bordor-solid ">
-                    <!-- <label for="fileInput"> Avatar</label> -->
-                    <input type="file" ref="fileInput" @change="handleFileInput">
-                    <div class="drop-area" @dragover.prevent="dragOver" @drop.prevent="dropFile"
-                        @click="$refs.fileInput.click()">
-                        <!-- <p>Drag and drop your profile picture here, or click to select</p> -->
-                    </div>
-                    <!-- <img v-if="userForm.imageProfile" :src="userForm.imageProfile" alt="Profile Image" style="max-width: 200px;"> -->
-                </div>
-                <button @click="updateprofilePicture()">test</button>
-
-
-            </div>
-        </div>
         <div class="profile-content mt-8">
             <div class="activity-stream "> </div>
             <div class="profile-sections bg-gray-100 mt-8">
@@ -184,40 +159,40 @@ const handleFileInput = (event) => {
         profilePicture.value = file
     }
 };
-const updateprofilePicture = async () => {
-    const formData = new FormData();
-    formData.append("profilePicture", profilePicture.value);
-    console.log(profilePicture.value)
+// const updateprofilePicture = async () => {
+//     const formData = new FormData();
+//     formData.append("profilePicture", profilePicture.value);
+//     console.log(profilePicture.value)
 
-    try {
-        console.log(formData)
-        const response = await $api('users/test', {
-            body: formData,
-            method: "POST",
-            headers: {
-            "Authorization": "bearer " + authStore.token,
-            'Content-Type': 'multipart/form-data',
-            },
-        });
+//     try {
+//         console.log(formData)
+//         const response = await $api('users/test', {
+//             body: formData,
+//             method: "POST",
+//             headers: {
+//             "Authorization": "bearer " + authStore.token,
+//             'Content-Type': 'multipart/form-data',
+//             },
+//         });
 
-        console.log(response.data);
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your profile picture has been updated",
-            showConfirmButton: false,
-            timer: 1500,
-        });
-    } catch (error) {
-        console.error(error);
-        // Handle the error
-        Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Failed to update profile picture",
-            showConfirmButton: false,
-            timer: 1500,
-        });
-    }
-};
+//         console.log(response.data);
+//         Swal.fire({
+//             position: "center",
+//             icon: "success",
+//             title: "Your profile picture has been updated",
+//             showConfirmButton: false,
+//             timer: 1500,
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         // Handle the error
+//         Swal.fire({
+//             position: "center",
+//             icon: "error",
+//             title: "Failed to update profile picture",
+//             showConfirmButton: false,
+//             timer: 1500,
+//         });
+//     }
+// };
 </script>

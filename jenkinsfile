@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE       = 'kenmurakii/fastapi-webhook:latest'
+        REPO_PATH          = 'kro-gamestore'
+    }
+ 
+    stages {
+        stage('Start Jenkins') {
+            steps {
+                sh 'echo Start Jenkins............'
+                sh 'echo docker : user =  $DOCKER_CREDENTIALS_USR : password = $DOCKER_CREDENTIALS_PSW'
+            }
+        }
+        stage('copy repository') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/Kenmuraki5/kro-gamestore.git']])
+                dir(REPO_PATH) {
+                    sh 'pwd'
+                    sh 'git pull origin main'
+                }
+                dir("${REPO_PATH}") {
+                    sh "git clone https://github.com/Kenmuraki5/kro-backend.git ."
+                }
+            }  
+       }
+        stage('Build and Run Docker Compose') {
+            steps {
+                script {
+                    dockerCompose(
+                        dockerComposeFile: 'docker-compose.yml',
+                        upOptions: '--build -d'
+                    )
+                }
+            }
+        }
+    }
+}

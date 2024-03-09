@@ -1,10 +1,10 @@
 <template>
   <div class="container mx-auto">
     <h1 class="text-3xl font-bold m-4">Products</h1>
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-    >
-      <div v-if="gameConsoleStore.gameConsoles">
+    <div v-if="gameConsoleStore.gameConsoles">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      >
         <div
           v-for="product in gameConsoleStore.gameConsoles"
           :key="product.Id"

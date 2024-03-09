@@ -90,11 +90,35 @@
           </svg>
           <li class="flex items-center space-x-3 text-left sm:space-x-4">
             <a
-              class="flex h-6 w-6 items-center justify-center rounded-full bg-gray-400 text-xs font-semibold text-white"
+              :class="{
+                'bg-emerald-200 text-xs font-semibold text-emerald-700':
+                  isCheckingPayment,
+                'bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2':
+                  !isCheckingPayment,
+              }"
+              class="flex h-6 w-6 items-center justify-center rounded-full"
               href="#"
-              >3</a
             >
-            <span class="font-semibold text-gray-500">Payment</span>
+              <p v-if="!isCheckingPayment">3</p>
+              <svg
+                v-if="isCheckingPayment"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <!-- You can add other content for the non-submitted state here -->
+            </a>
+
+            <span class="font-semibold text-gray-900">Payment</span>
           </li>
         </ul>
       </div>
@@ -382,10 +406,10 @@
         </div>
       </div>
       <button
-        @click="submitForm"
+        @click="checkingCard()"
         class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
       >
-        Place Order
+        Payment
       </button>
     </div>
   </div>
@@ -417,27 +441,29 @@ const billingSubDistrict = ref("");
 const billingDistrict = ref("");
 const billingProvince = ref("");
 const billingZip = ref("");
-const shippingMethod = ref("");
+const shippingMethod = ref("Kerry Express");
+const tokenpayment = ref("");
 
 const isCheckingCredit = ref(false);
+const isCheckingPayment = ref(false);
 const { $api } = useNuxtApp();
-const submitForm = async () => {
 
-  let address =
-            billingAddress.value +
-            " " +
-            billingSubDistrict.value +
-            " " +
-            billingDistrict.value +
-            " " +
-            billingProvince +
-            " " +
-            billingZip;
+const checkingCard = async () => {
+  const address =
+    billingAddress.value +
+    " " +
+    billingSubDistrict.value +
+    " " +
+    billingDistrict.value +
+    " " +
+    billingProvince.value +
+    " " +
+    billingZip.value;
   const orders = cartStore.cart.map((item) => {
     return {
       ProductId: item.Id,
       Quantity: item.quantity,
-      Email: authStore.user.email,
+      Email: email.value,
       OrderDate: "2024-02-29T12:34:56Z",
       ShippingAddress: address,
       ShippingMethod: shippingMethod.value,
@@ -446,7 +472,7 @@ const submitForm = async () => {
     };
   });
   try {
-    const tokenpayment = await $api("orders/createPaymentToken", {
+    tokenpayment.value = await $api("orders/createPaymentToken", {
       method: "POST",
       body: {
         Name: "John Doe",
@@ -456,7 +482,6 @@ const submitForm = async () => {
         cvc: "123",
       },
     });
-    console.log(tokenpayment);
     isCheckingCredit.value = true;
     Swal.fire({
       title: "Are you sure",
@@ -468,20 +493,28 @@ const submitForm = async () => {
       confirmButtonText: "Payment",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try {
-          await $api("orders/addOrders", {
-            method: "POST",
-            body: { newOrder: orders, token: tokenpayment, amount: totalAmount.value },
-          });
-          Swal.fire({
-            title: "Success!",
-            text: "Your view order in order page.",
-            icon: "success",
-          });
-        } catch (error) {
-          console.log(error);
-        }
+        payment(orders);
       }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const payment = async (orders) => {
+  try {
+    await $api("orders/addOrders", {
+      method: "POST",
+      body: {
+        newOrder: orders,
+        token: tokenpayment.value,
+        amount: totalAmount.value,
+      },
+    });
+    Swal.fire({
+      title: "Success!",
+      text: "Your view order in order page.",
+      icon: "success",
     });
   } catch (error) {
     console.log(error);

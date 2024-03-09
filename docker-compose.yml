@@ -13,3 +13,8 @@ services:
     build: .
     ports:
       - "3000:3000"
+  go:
+    image: go-backend
+    build: ./kro-backend
+    prots:
+      - "800:8080"

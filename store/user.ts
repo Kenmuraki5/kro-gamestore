@@ -50,6 +50,8 @@ export const useAuth = defineStore('auth', {
             password: password,
           },
         });
+        const token = useCookie('token');
+        token.value = this.token; 
         if (this.token){
           this.fetchUser()
         }
@@ -75,6 +77,8 @@ export const useAuth = defineStore('auth', {
             }
           },
         });
+        const token = useCookie('token');
+        token.value = this.token; 
         if (this.token){
           this.fetchUser()
           navigateTo("/")
@@ -85,6 +89,8 @@ export const useAuth = defineStore('auth', {
       }
     },
     async logout() {
+      const token = useCookie('token');
+      token.value = null;
       this.$reset();
     },
 

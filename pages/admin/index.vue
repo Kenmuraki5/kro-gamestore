@@ -280,7 +280,6 @@
             <th class="font-['kanit'] border px-4 py-2">วันที่สั่งซื้อ</th>
             <th class="font-['kanit'] border px-4 py-2">ที่อยู่</th>
             <th class="font-['kanit'] border px-4 py-2">แก้ไข</th>
-            <th class="font-['kanit'] border px-4 py-2">ลบ</th>
           </tr>
         </thead>
         <tbody>
@@ -310,28 +309,19 @@
       <table v-if="selectedSide == 'userList'">
         <thead>
           <tr class="sticky top-0 bg-white">
-            <th class="font-['kanit'] border px-4 py-2">User Id</th>
+            <th class="font-['kanit'] border px-4 py-2">อีเมล</th>
             <th class="font-['kanit'] border px-4 py-2">รป</th>
             <th class="font-['kanit'] border px-4 py-2">ชื่อจริง</th>
-            <th class="font-['kanit'] border px-4 py-2">อีเมล</th>
             <th class="font-['kanit'] border px-4 py-2">ที่อยู่</th>
-            <th class="font-['kanit'] border px-4 py-2">เบอร์โทรศัพท์</th>
-            <th class="font-['kanit'] border px-4 py-2">ลบ</th>
           </tr>
         </thead>
         <tbody>
-          <!-- <tr v-for="item in productStore.products" :key="item.productId">
-                        <td class="font-['kanit'] border px-4 py-2">{{ item.userId }}</td>
-                        <td class="font-['kanit'] border px-4 py-2">{{ item.image }}</td>
-                        <td class="font-['kanit'] border px-4 py-2">{{ item.fullname }}</td>
-                        <td class="font-['kanit'] border px-4 py-2">{{ item.email }}</td>
-                        <td class="font-['kanit'] border px-4 py-2">{{ item.address }}</td>
-                        <td class="font-['kanit'] border px-4 py-2">{{ item.phoneNumebr }}</td>
-                        <td class="font-['kanit'] border px-4 py-2">{{ item.shippingMethod }}</td>
-                        <td class="font-['kanit'] border px-4 py-2">
-                            <TrashIcon class="h-6 w-6" aria-hidden="true" />
-                        </td>
-                    </tr> -->
+          <tr v-for="user in users" :key="user.email">
+            <td class="font-['kanit'] border px-4 py-2">{{ user.email }}</td>
+            <td class="font-['kanit'] border px-4 py-2">{{ user.imageProfile }}</td>
+            <td class="font-['kanit'] border px-4 py-2">{{ user.fullName }}</td>
+            <td class="font-['kanit'] border px-4 py-2">{{ user.address }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -456,7 +446,7 @@ const groupedData = computed(() => {
       subtotal: order.subtotal,
       shippingAddress: order.shippingAddress,
       type: order.type,
-      orderDate: order.orderDate
+      orderDate: order.orderDate,
     });
 
     return acc;
@@ -559,9 +549,10 @@ const fetchProduct = async () => {
 const users = ref([]);
 const fetchAllUser = async () => {
   try {
-    users = await $api("users", {
+    users.value = await $api("users/alluser", {
       method: "GET",
     });
+    console.log(users.value)
   } catch (error) {
     console.log(error);
   }
@@ -667,6 +658,6 @@ fetchAllOrder();
 fetchAllUser();
 
 definePageMeta({
-  layout: "",
+  layout: "admin",
 });
 </script>
