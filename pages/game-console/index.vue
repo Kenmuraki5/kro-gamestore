@@ -20,7 +20,6 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useGameConsoleStore } from "@/store/console";
-import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 
 const gameConsoleStore = useGameConsoleStore();
 </script>

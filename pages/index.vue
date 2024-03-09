@@ -74,6 +74,7 @@ import { useGameConsoleStore } from "@/store/console";
 import takken8 from '~/assets/bg/takken8.jpeg'
 import spidermanRemaster from '~/assets/bg/spiderman-remaster.png'
 import grandblueRelink from '~/assets/bg/grandblue-relink.png'
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 
 import takken8logo from '~/assets/gamelogo/takken8logo.jpeg'
 import spidermanRemasterlogo from '~/assets/gamelogo/spiderman-remasterlogo.png'
