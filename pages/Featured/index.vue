@@ -80,7 +80,7 @@
 <script setup>
 import { useGameStore } from "@/store/game";
 const gameStore = useGameStore();
-// console.log(gameStore)
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 import { useGameConsoleStore } from "@/store/console";
 
 const gameConsoleStore = useGameConsoleStore();

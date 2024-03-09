@@ -36,6 +36,8 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGameConsoleStore } from '~/store/console';
 import { useCartStore } from '~/store/cart';
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
+
 const route = useRoute();
 const gameConsoleStore = useGameConsoleStore();
 const cartStore = useCartStore();

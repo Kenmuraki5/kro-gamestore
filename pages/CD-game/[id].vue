@@ -29,7 +29,7 @@
           {{ product.description }}
         </div>
         <div class="mt-10 md:text-2xl">Price : {{ product.price }} ฿</div>
-        <div class="mt-5">Available on <b v-for="(supDevice) in product.supDevice">{{ supDevice }}</b></div>
+        <div class="mt-5">Available on <b v-for="(supDevice) in product.supDevice" :key="supDevice.Id">{{ supDevice }}</b></div>
         <div class="w-64 mt-10">
           <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
             <Slide v-for="slide in product.images" :key="slide">
@@ -64,7 +64,7 @@
       <div class="mt-10">{{ product.provider }}</div>
       <div class="text-sm">{{ product.description }}</div>
       <div class="mt-10 md:text-2xl">Price : {{ product.price }} ฿</div>
-      <div class="mt-5 font-bold">Available on <b v-for="(supDevice) in product.supDevice">{{ supDevice }}</b></div>
+      <div class="mt-5 font-bold">Available on <b v-for="(supDevice) in product.supDevice" :key="supDevice.Id">{{ supDevice }}</b></div>
       <div class="w-64 mx-auto m-10">
         <!-- Added mx-auto class -->
         <Carousel :autoplay="4000" :wrap-around="true" :transition="900">
@@ -96,6 +96,8 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useCartStore } from "~/store/cart";
 import { useGameStore } from "~/store/game";
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
+
 const route = useRoute();
 const gameStore = useGameStore();
 const id = route.params.id;
