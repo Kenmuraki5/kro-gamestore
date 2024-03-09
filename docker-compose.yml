@@ -8,13 +8,14 @@ services:
       - "80:80"
     depends_on:
       - nuxt
+      - golang
   nuxt:
     image: nuxt
     build: .
     ports:
       - "3000:3000"
-  go:
-    image: go-backend
+  golang:
+    image: golang
     build: ./kro-backend
-    prots:
-      - "800:8080"
+    ports:
+      - "8080:8080"

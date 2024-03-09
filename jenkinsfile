@@ -1,37 +1,47 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE       = 'kenmurakii/fastapi-webhook:latest'
-        REPO_PATH          = 'kro-gamestore'
-    }
- 
     stages {
         stage('Start Jenkins') {
             steps {
-                sh 'echo Start Jenkins............'
-                sh 'echo docker : user =  $DOCKER_CREDENTIALS_USR : password = $DOCKER_CREDENTIALS_PSW'
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OMISE_PUBLIC_KEY', variable: 'OMISE_PUBLIC_KEY'),
+                        string(credentialsId: 'OMISE_SECRET_KEY', variable: 'OMISE_SECRET_KEY'),
+                    ]) {
+                        echo 'Start Jenkins............'
+                        echo "OMISE_PUBLIC_KEY: ${OMISE_PUBLIC_KEY}"
+                        echo "OMISE_SECRET_KEY: ${OMISE_SECRET_KEY}"
+                    }
+                }
             }
         }
-        stage('copy repository') {
+
+        stage('Copy repository and Build Docker Compose') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/Kenmuraki5/kro-gamestore.git']])
-                dir(REPO_PATH) {
-                    sh 'pwd'
-                    sh 'git pull origin main'
+                script {
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'kenGithub', url: 'https://github.com/Kenmuraki5/kro-gamestore.git']])
+                
+                    dir('kro-gamestore') {
+                        // Avoid using java.io.File in a way that triggers Script Security restrictions
+                        sh 'git clone https://github.com/Kenmuraki5/kro-backend.git'
+
+                        dir('kro-backend') {
+                            // Modify the script to comply with security restrictions
+                            echo "OMISE_PUBLIC_KEY=${OMISE_PUBLIC_KEY}" > .env
+                            echo "OMISE_SECRET_KEY=${OMISE_SECRET_KEY}" >> .env
+                            echo "SECRET_KEY=s_kroKey_back_i2tpohbojgagageq3u4ihryh" >> .env
+                        }
+                    }
                 }
-                dir("${REPO_PATH}") {
-                    sh "git clone https://github.com/Kenmuraki5/kro-backend.git ."
-                }
-            }  
-       }
+            }
+        }
+
         stage('Build and Run Docker Compose') {
             steps {
                 script {
-                    dockerCompose(
-                        dockerComposeFile: 'docker-compose.yml',
-                        upOptions: '--build -d'
-                    )
+                    // Adjust the script to comply with security restrictions
+                    sh "PATH=\$PATH:/usr/local/bin docker-compose -f 'kro-gamestore/kro-backend/docker-compose.yml' up -d --build"
                 }
             }
         }
