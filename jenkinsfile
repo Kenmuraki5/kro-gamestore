@@ -1,8 +1,7 @@
 pipeline {
     agent any
-
+    
     environment {
-        DOCKER_IMAGE       = 'kenmurakii/fastapi-webhook:latest'
         REPO_PATH          = 'kro-gamestore'
     }
  
@@ -10,7 +9,6 @@ pipeline {
         stage('Start Jenkins') {
             steps {
                 sh 'echo Start Jenkins............'
-                sh 'echo docker : user =  $DOCKER_CREDENTIALS_USR : password = $DOCKER_CREDENTIALS_PSW'
             }
         }
         stage('copy repository') {
