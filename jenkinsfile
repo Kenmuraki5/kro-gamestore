@@ -19,8 +19,12 @@ pipeline {
 
         stage('Build and Run Docker Compose') {
             steps {
-                sh 'ls'
-                sh 'docker compose -f "docker-compose.yml" up -d --build'
+                sh 'echo "OMISE_PUBLIC_KEY=pkey_test_5yy91xv84zjnnitvdw0" > .env'
+                sh 'echo "OMISE_SECRET_KEY=skey_test_5wmco0oh1cfnliaoszv" >> .env'
+                sh 'echo "SECRET_KEY=s_kroKey_back_i2tpohbojgagageq3u4ihryh" >> .env'
+                sh 'echo "DYNAMO_ACCESSKEY=1cqeve" >> .env'
+                sh 'echo "DYNAMO_SECRETACCESSKEY=xfpz7n" >> .env'
+                sh 'docker-compose up -d --build'
             }
         }
     }

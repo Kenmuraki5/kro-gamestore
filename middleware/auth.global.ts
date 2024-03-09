@@ -1,18 +1,13 @@
 import { jwtDecode } from "jwt-decode";
-import { useAuth } from "~/store/user";
-
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-
-  const authStore = useAuth();
   const token = useCookie("token");
 
-  const { role }: { role: string } = token.value ? jwtDecode(token.value) : { role: "" };
-
-  if (role != "kro-admin" && (to.path == "/admin")) {
-    abortNavigation();
+  const { role }:any = token.value ? jwtDecode(token.value) : "";
+  if (role != "kro-admin" && to.name == "Admin") {
+    return abortNavigation();
   }
-  else if ((to.path == "/profile" || to.path == "/checkout" || to.path == "/orderHistory") && !token.value) {
+  if ((to.name == "profile" || to.name == "checkout" || to.name == "profile-order") && !token.value) {
     return navigateTo("/login");
   }
 });
