@@ -657,7 +657,4 @@ fetchProduct();
 fetchAllOrder();
 fetchAllUser();
 
-definePageMeta({
-  layout: "admin",
-});
 </script>
