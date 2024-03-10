@@ -2,6 +2,16 @@ pipeline {
     agent any
 
     stages {
+        stage('ssh to instance') {
+            steps {
+                script {
+                    sshagent(credentials: ['your-ssh-credentials-id']) {
+                        sh "ssh ec2-user@your-ec2-instance-ip 'ls'"
+                    }
+                }
+            }
+        }
+
         stage('Clone Repositories') {
             steps {
                 script {
